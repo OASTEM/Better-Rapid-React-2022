@@ -14,7 +14,8 @@ public class AutoClimb extends SequentialCommandGroup {
     addCommands(
         new InstantCommand(() -> pivots.setPositionPivots(-41, Constants.Pivot.FAST_PID.s)).withTimeout(2),
         new ClimbDown(climber, 1000, 1000).withTimeout(2)
-            .andThen(new PivotRelative(pivots, 20, Constants.Pivot.FAST_PID.s).withTimeout(1)),
+            .andThen(new PivotRelative(pivots, 15, Constants.Pivot.FAST_PID.s).withTimeout(1)),
+            // .andThen(new PivotRelative(pivots, 20, Constants.Pivot.FAST_PID.s).withTimeout(1)),
         new ClimbUp(climber, 55000, 55000, Constants.Climber.UP.s).withTimeout(2)
             .alongWith(new InstantCommand(() -> pivots.setPositionPivots(-37, Constants.Pivot.FAST_PID.s))).withTimeout(2)
             .andThen(new PivotRelative(pivots, -15, Constants.Pivot.FAST_PID.s).withTimeout(1)),
