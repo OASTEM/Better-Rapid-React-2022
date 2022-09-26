@@ -10,14 +10,14 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.Limelight;
 
 public class Shoot extends CommandBase {
     private Intake intake;
     private Shooter shooter;
     private DriveTrain driveTrain;
     private NavX navX;
-    private Vision vision;
+    private Limelight limelight;
     private ShuffleBoard shuffleBoard;
     private boolean usingVision;
     private boolean isAuto;
@@ -35,12 +35,12 @@ public class Shoot extends CommandBase {
     private boolean shooting;
 
     // TELEOP VISION
-    public Shoot(Intake intake, Shooter shooter, Vision vision, DriveTrain driveTrain, NavX navX) {
-        addRequirements(intake, shooter, vision, driveTrain);
+    public Shoot(Intake intake, Shooter shooter, Limelight limelight, DriveTrain driveTrain, NavX navX) {
+        addRequirements(intake, shooter, limelight, driveTrain);
         this.intake = intake;
         this.shooter = shooter;
         this.isAuto = false;
-        this.vision = vision;
+        this.limelight = limelight;
         this.usingVision = true;
         this.navX = navX;
         this.driveTrain = driveTrain;
@@ -77,7 +77,7 @@ public class Shoot extends CommandBase {
         }
         if (usingVision) {
             shooting = false;
-            visionAngle = vision.getAngle();
+            visionAngle = limelight.getAngle();
             
             navX.reset();
             turnCounter = 0;

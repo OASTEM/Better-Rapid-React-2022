@@ -23,6 +23,7 @@ import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Pivots;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.Limelight;
 import frc.robot.utils.Constants;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.ShuffleBoard;
@@ -38,6 +39,7 @@ public class RobotContainer {
   private final NavX navX = new NavX();
   private final Pivots pivots = new Pivots();
   private final Vision vision = new Vision();
+  private final Limelight limelight = new Limelight();
   // private final ColorSensor colorSensor = new ColorSensor();
 
   private final JoystickButton driveA = new JoystickButton(drivePad, 1);
