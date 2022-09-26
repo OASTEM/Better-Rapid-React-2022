@@ -20,7 +20,7 @@ public class Limelight extends SubsystemBase {
 
   private double limelightMountDegree = 2;
   private double limelightHeight = 2; 
-  private double goalHeight = 2;  
+  private double goalHeight = 107;  
   private double angleToGoalDegrees;
   private double angleToGoalInRadians;
   private double distance;
