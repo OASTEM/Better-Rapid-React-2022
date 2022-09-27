@@ -11,6 +11,7 @@ import frc.robot.commands.Climber.ClimbUp;
 import frc.robot.commands.Climber.PivotRelative;
 import frc.robot.commands.DriveTrain.ArcadeDrive;
 import frc.robot.commands.DriveTrain.DriveStraight;
+import frc.robot.commands.DriveTrain.Test;
 import frc.robot.commands.Calibration;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.Shoot;
@@ -84,7 +85,8 @@ public class RobotContainer {
 
     driveX.whileHeld(new ConditionalCommand(new AutoClimb(climber, pivots), new InstantCommand(), driveTrain::getClimbing));
     driveY.whileHeld(new ConditionalCommand(new ClimbUp(climber, Constants.Climber.UP.s), new InstantCommand(), driveTrain::getClimbing));
-    driveA.whileHeld(new ConditionalCommand(new ClimbDown(climber), new InstantCommand(), driveTrain::getClimbing));
+    driveA.whileHeld(new Test(driveTrain, limelight));
+    //driveA.whileHeld(new ConditionalCommand(new ClimbDown(climber), new InstantCommand(), driveTrain::getClimbing));
 
     driveB.whenPressed(new InstantCommand(driveTrain::toggleSlowMode));
   }

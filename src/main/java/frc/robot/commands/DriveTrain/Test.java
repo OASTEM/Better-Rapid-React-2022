@@ -4,19 +4,23 @@
 
 package frc.robot.commands.DriveTrain;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Limelight;
 
 public class Test extends CommandBase {
   /** Creates a new Test. */
   // Timer timer;
   DriveTrain driveTrain;
+  Limelight limelight;
   double goal;
   double error;
 
-  public Test(DriveTrain driveTrain) {
-    addRequirements(driveTrain);
+  public Test(DriveTrain driveTrain, Limelight limelight) {
+    addRequirements(driveTrain, limelight);
     this.driveTrain = driveTrain;
+    this.limelight = limelight; 
     goal = 95000;
     // timer = new Timer();
   }
@@ -31,13 +35,15 @@ public class Test extends CommandBase {
 
   @Override
   public void execute() {
-    error = goal - driveTrain.getLeftEncoderCount();
-    driveTrain.arcadeDrive(0, (-error / goal) * .4);
+    SmartDashboard.putNumber("Horizontal Angle: ", limelight.getAngle());
+    SmartDashboard.putNumber("Vertical Angle: ", limelight.getVerticalAngle());
+    // error = goal - driveTrain.getLeftEncoderCount();
+    // driveTrain.arcadeDrive(0, (-error / goal) * .4);
   }
 
   @Override
   public void end(boolean interrupted) {
-    driveTrain.stop();
+    // driveTrain.stop();
   }
 
   @Override
