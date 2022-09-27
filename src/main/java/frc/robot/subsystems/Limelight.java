@@ -49,14 +49,13 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
 
-    angleToGoalDegrees = limelightMountDegree +  y;
-    angleToGoalInRadians = angleToGoalDegrees * (Math.PI / 180.0);
-    distance = (goalHeight - limelightHeight)/Math.tan(angleToGoalInRadians);
-
 
   }
 
   public double getDistance(){
+    angleToGoalDegrees = limelightMountDegree +  y;
+    angleToGoalInRadians = angleToGoalDegrees * (Math.PI / 180.0);
+    distance = (goalHeight - limelightHeight)/Math.tan(angleToGoalInRadians);
     System.out.println(distance);
     return distance;
   }
@@ -67,5 +66,13 @@ public class Limelight extends SubsystemBase {
 
   public double getBackRPM(){
     return 1.0;
+  }
+
+  public double getAngle(){
+    return x;
+  }
+
+  public double getVerticalAngle(){
+    return y;
   }
 }

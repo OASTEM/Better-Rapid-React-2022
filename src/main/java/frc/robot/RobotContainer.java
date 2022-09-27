@@ -76,7 +76,7 @@ public class RobotContainer {
     if (Constants.Shooter.DEBUG_MODE){
       leftBumper.whileHeld(new Shoot(intake, shooter, () -> shuffleBoard.getShoot(), () -> shuffleBoard.getRoller(), shuffleBoard));
     } else {
-      leftBumper.whileHeld(new Shoot(intake, shooter, vision, driveTrain, navX));
+      leftBumper.whileHeld(new Shoot(intake, shooter, limelight, driveTrain, navX));
     }
 
     // driveStartButton.whenPressed(new Calibration(climber, pivots, intake, driveTrain));

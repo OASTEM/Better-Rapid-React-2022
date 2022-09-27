@@ -102,15 +102,15 @@ public class Shoot extends CommandBase {
             if (shooting){
                 shootWhenReady(visionFrontRPM, visionBackRPM);
             } else if (turnCounter > 3 && Math.abs(errorAngle) < 1) {
-                visionFrontRPM = (int) vision.getFrontRPM();
-                visionBackRPM = (int) vision.getBackRPM();
+                visionFrontRPM = (int) limelight.getFrontRPM();
+                visionBackRPM = (int) limelight.getBackRPM();
                 shooter.setVelocity(visionFrontRPM);
                 shooter.setRollerVelocity(visionBackRPM);
                 shooting = true;
                 driveTrain.tankDrive(0, 0);
             } else if (Math.abs(errorAngle) < 1) {
                 turnCounter ++;
-                visionAngle = vision.getAngle();
+                visionAngle = limelight.getAngle();
                 navX.reset();
                 driveTrain.tankDrive(0, 0);
 
