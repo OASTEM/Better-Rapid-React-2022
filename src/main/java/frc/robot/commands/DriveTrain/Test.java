@@ -35,7 +35,7 @@ public class Test extends CommandBase {
 
   @Override
   public void execute() {
-    SmartDashboard.putNumber("Horizontal Angle: ", limelight.getAngle());
+    SmartDashboard.putNumber("Horizontal Angle: ", limelight.getHorizontalAngle());
     SmartDashboard.putNumber("Vertical Angle: ", limelight.getVerticalAngle());
     // error = goal - driveTrain.getLeftEncoderCount();
     // driveTrain.arcadeDrive(0, (-error / goal) * .4);

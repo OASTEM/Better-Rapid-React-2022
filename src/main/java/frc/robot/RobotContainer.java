@@ -15,6 +15,7 @@ import frc.robot.commands.DriveTrain.Test;
 import frc.robot.commands.Calibration;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.Shoot;
+import frc.robot.commands.AimAtTarget;
 
 import frc.robot.subsystems.Climber;
 // import frc.robot.subsystems.ColorSensor;
@@ -77,7 +78,7 @@ public class RobotContainer {
     if (Constants.Shooter.DEBUG_MODE){
       leftBumper.whileHeld(new Shoot(intake, shooter, () -> shuffleBoard.getShoot(), () -> shuffleBoard.getRoller(), shuffleBoard));
     } else {
-      leftBumper.whileHeld(new Shoot(intake, shooter, limelight, driveTrain, navX));
+      leftBumper.whileHeld(new AimAtTarget(driveTrain, limelight, navX));
     }
 
     // driveStartButton.whenPressed(new Calibration(climber, pivots, intake, driveTrain));

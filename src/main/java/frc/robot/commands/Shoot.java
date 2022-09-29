@@ -77,7 +77,7 @@ public class Shoot extends CommandBase {
         }
         if (usingVision) {
             shooting = false;
-            visionAngle = limelight.getAngle();
+            visionAngle = limelight.getHorizontalAngle();
             
             navX.reset();
             turnCounter = 0;
@@ -110,7 +110,7 @@ public class Shoot extends CommandBase {
                 driveTrain.tankDrive(0, 0);
             } else if (Math.abs(errorAngle) < 1) {
                 turnCounter ++;
-                visionAngle = limelight.getAngle();
+                visionAngle = limelight.getHorizontalAngle();
                 navX.reset();
                 driveTrain.tankDrive(0, 0);
 
