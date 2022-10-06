@@ -117,6 +117,6 @@ public class Climber extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println("right encoder: " + getRightEncoderCount());
+    //System.out.println("right encoder: " + getRightEncoderCount());
   }
 }

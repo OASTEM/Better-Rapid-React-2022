@@ -11,6 +11,7 @@ import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.utils.Constants;
 import frc.robot.utils.ShuffleBoard;
+import java.util.concurrent.TimeUnit;
 
 
 public class AimAtTarget extends CommandBase {
@@ -20,6 +21,7 @@ public class AimAtTarget extends CommandBase {
   private NavX navX;
   private double visionAngle;
   private int turnCounter;
+  private double errorAngle;
 
 
   public AimAtTarget(DriveTrain driveTrain, Limelight limelight, NavX navX) {
@@ -34,18 +36,22 @@ public class AimAtTarget extends CommandBase {
   public void initialize() {
     visionAngle = limelight.getHorizontalAngle();
     navX.reset();
+    errorAngle = Math.abs(visionAngle);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     visionAngle = limelight.getHorizontalAngle();
-    double errorAngle = Math.abs(visionAngle - navX.getAngle());
-    if ((turnCounter > 3 && Math.abs(errorAngle) < 1)){
+    errorAngle = Math.abs(visionAngle);
+    System.out.println("NavX " + navX.getAngle());
+    System.out.println("Limelight " + limelight.getHorizontalAngle());
+    System.out.println("Error " + errorAngle);
+    if ((turnCounter > 5 && Math.abs(errorAngle) < 3)){
       driveTrain.tankDrive(0, 0);
       System.out.println("Done turning!");
     }
-    else if (Math.abs(errorAngle) < 1){
+    else if (Math.abs(errorAngle) < 3){
       turnCounter ++;
       visionAngle = limelight.getHorizontalAngle();
       navX.reset();
@@ -60,11 +66,12 @@ public class AimAtTarget extends CommandBase {
           turnPower = Math.pow(errorAngle,0.706689)*0.0152966+0.0550678;
       }
       turnPower = Math.min(turnPower, 0.3);
-      if ((visionAngle - navX.getAngle()) < 0){
+      if (visionAngle < 0){
           driveTrain.tankDrive(-turnPower,turnPower);
       } else {
           driveTrain.tankDrive(turnPower, -turnPower);
       }
+
     }
   }
 
