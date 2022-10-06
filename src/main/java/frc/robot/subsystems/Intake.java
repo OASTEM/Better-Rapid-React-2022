@@ -38,7 +38,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void intakeBottomMotor(double speed) {
-    bottomMotor.set(speed);
+    bottomMotor.set(-speed);
   }
 
   public void intakeOutsideMotor(double speed) {
