@@ -47,6 +47,7 @@ public class AimAtTarget extends CommandBase {
     System.out.println("NavX " + navX.getAngle());
     System.out.println("Limelight " + limelight.getHorizontalAngle());
     System.out.println("Error " + errorAngle);
+    System.out.println("Emily did this");
     if ((turnCounter > 5 && Math.abs(errorAngle) < 3)){
       driveTrain.tankDrive(0, 0);
       System.out.println("Done turning!");
