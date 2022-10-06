@@ -100,7 +100,7 @@ public class RobotContainer {
     opB.whileHeld(new PivotRelative(pivots, -10, Constants.Pivot.FAST_PID.s));
     opRightBumper.whileHeld(new IntakeBalls(intake));
     opStartButton.whenPressed(new Calibration(climber, pivots, intake, driveTrain));
-    opLeftBumper.whileHeld(new Shoot(intake, shooter, () -> shuffleBoard.getShooterVelocity(), () -> shuffleBoard.getRollerVelocity(), shuffleBoard).beforeStarting(new WaitCommand(1)).alongWith(new DriveStraight(driveTrain, () -> shuffleBoard.getMoveBack())));
+    opLeftBumper.whileHeld(new Shoot(intake, shooter, () -> shuffleBoard.getShooterVelocity(), () -> shuffleBoard.getRollerVelocity(), shuffleBoard).beforeStarting(new WaitCommand(1)).alongWith(new DriveStraight(driveTrain, shuffleBoard.getMoveBack())));
   }
 
   public Command getAutonomousCommand() {

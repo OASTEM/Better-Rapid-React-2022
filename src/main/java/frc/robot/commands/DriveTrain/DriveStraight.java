@@ -9,10 +9,10 @@ import frc.robot.subsystems.DriveTrain;
 
 public class DriveStraight extends CommandBase {
   private final DriveTrain driveTrain;
-  private DoubleSupplier suppliedGoal; 
+  private double suppliedGoal; 
   int count = 0;
 
-  public DriveStraight(DriveTrain driveTrain, DoubleSupplier suppliedGoal) {
+  public DriveStraight(DriveTrain driveTrain, double suppliedGoal) {
     addRequirements(driveTrain);
     this.driveTrain = driveTrain;
     this.suppliedGoal = suppliedGoal;
@@ -21,16 +21,16 @@ public class DriveStraight extends CommandBase {
   @Override
   public void initialize() {
     driveTrain.resetEncoders();
-    driveTrain.setPosition(driveTrain.getNativeUnitsFromInches(suppliedGoal.getAsDouble()));
+    driveTrain.setPosition(driveTrain.getNativeUnitsFromInches(suppliedGoal));
     Timer.delay(.1);
   }
 
   @Override
   public void execute() {
     double leftError = Math.abs(
-        driveTrain.getNativeUnitsFromInches(suppliedGoal.getAsDouble()) - driveTrain.getLeftEncoderCount());
+        driveTrain.getNativeUnitsFromInches(suppliedGoal) - driveTrain.getLeftEncoderCount());
     double rightError = Math.abs(
-        driveTrain.getNativeUnitsFromInches(suppliedGoal.getAsDouble()) + driveTrain.getRightEncoderCount());
+        driveTrain.getNativeUnitsFromInches(suppliedGoal) + driveTrain.getRightEncoderCount());
 
     if ((leftError <= Constants.DriveTrain.ERROR_THRESHOLD) && (rightError <= Constants.DriveTrain.ERROR_THRESHOLD)) {
       count++;

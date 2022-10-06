@@ -15,17 +15,17 @@ public class FourBallAuto extends SequentialCommandGroup {
   public FourBallAuto(Intake intake, Shooter shooter, DriveTrain driveTrain, NavX navX) {
 
     addCommands(
-        new DriveStraight(driveTrain, () -> 45).withTimeout(3).alongWith(
+        new DriveStraight(driveTrain, 45).withTimeout(3).alongWith(
             new IntakeBalls(intake).withTimeout(3)),
         new TurnToAngle(driveTrain, navX, 165).withTimeout(2),
         new Shoot(intake, shooter, -3500, 1500).withTimeout(5),
         new TurnToAngle(driveTrain, navX, -150).withTimeout(2),
-        new DriveStraight(driveTrain, () -> 150).withTimeout(5).alongWith(
+        new DriveStraight(driveTrain, 150).withTimeout(5).alongWith(
             new IntakeBalls(intake).withTimeout(5)),
-        new DriveStraight(driveTrain, () -> -150).withTimeout(4),
+        new DriveStraight(driveTrain, -150).withTimeout(4),
         new TurnToAngle(driveTrain, navX, 150).withTimeout(2),
         new Shoot(intake, shooter, -3500, 1500).withTimeout(5),
-        new DriveStraight(driveTrain, () -> -50).withTimeout(3)
+        new DriveStraight(driveTrain, -50).withTimeout(3)
     );
   }
 }

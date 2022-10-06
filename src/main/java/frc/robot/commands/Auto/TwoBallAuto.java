@@ -20,12 +20,12 @@ public class TwoBallAuto extends SequentialCommandGroup {
     addCommands(
         new Shoot(intake, shooter, -3000, 1200).withTimeout(4),
         new TurnToAngle(driveTrain, navX, angle).withTimeout(2),
-        new DriveStraight(driveTrain, () -> 45).withTimeout(2).alongWith(
+        new DriveStraight(driveTrain, 45).withTimeout(2).alongWith(
             new IntakeBalls(intake).withTimeout(2)),
-        new DriveStraight(driveTrain, () -> -45).withTimeout(2),
+        new DriveStraight(driveTrain,-45).withTimeout(2),
         new TurnToAngle(driveTrain, navX, -angle).withTimeout(2),
         new Shoot(intake, shooter, -3000, 1200).withTimeout(4),
-        new DriveStraight(driveTrain, () -> -50).withTimeout(3)
+        new DriveStraight(driveTrain, -50).withTimeout(3)
     );
   }
 }
