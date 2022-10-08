@@ -55,6 +55,8 @@ public class Driving extends CommandBase {
     driveTrain.tankDrive(leftSpeed, -rightSpeed);
     SmartDashboard.putNumber("Right Speed", rightSpeed);
     SmartDashboard.putNumber("Left Speed", leftSpeed);
+    SmartDashboard.putNumber("Left Error", leftError);
+    SmartDashboard.putNumber("Right Error", rightError);
   }
 
   // Called once the command ends or is interrupted.
