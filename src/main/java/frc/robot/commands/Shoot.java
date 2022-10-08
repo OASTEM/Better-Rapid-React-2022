@@ -33,6 +33,7 @@ public class Shoot extends CommandBase {
     private int turnCounter;
     private boolean shooterDebug = false;
     private boolean shooting;
+    double errorAngle;
 
     // TELEOP VISION
     public Shoot(Intake intake, Shooter shooter, Limelight limelight, DriveTrain driveTrain, NavX navX) {
@@ -72,6 +73,9 @@ public class Shoot extends CommandBase {
 
     @Override
     public void initialize() {
+        visionAngle = limelight.getHorizontalAngle();
+        navX.reset();
+        errorAngle = Math.abs(visionAngle);
         if (shooterDebug){
             shooter.setPIDFront(shuffleBoard.getShooterPID());
         }
@@ -98,17 +102,18 @@ public class Shoot extends CommandBase {
     @Override
     public void execute() {
         if (usingVision) {
-            double errorAngle = Math.abs(visionAngle - navX.getAngle());
+            errorAngle = Math.abs(limelight.getHorizontalAngle());
+            visionAngle = limelight.getHorizontalAngle();
             if (shooting){
                 shootWhenReady(visionFrontRPM, visionBackRPM);
-            } else if (turnCounter > 3 && Math.abs(errorAngle) < 1) {
+            } else if (turnCounter > 3 && Math.abs(errorAngle) < 3) {
                 visionFrontRPM = (int) limelight.getFrontRPM();
                 visionBackRPM = (int) limelight.getBackRPM();
                 shooter.setVelocity(visionFrontRPM);
                 shooter.setRollerVelocity(visionBackRPM);
                 shooting = true;
                 driveTrain.tankDrive(0, 0);
-            } else if (Math.abs(errorAngle) < 1) {
+            } else if (Math.abs(errorAngle) < 3) {
                 turnCounter ++;
                 visionAngle = limelight.getHorizontalAngle();
                 navX.reset();
@@ -122,9 +127,9 @@ public class Shoot extends CommandBase {
                 else{
                     turnPower = Math.pow(errorAngle,0.706689)*0.0152966+0.0550678;
                 }
-                Math.min(turnPower, 0.3);
-                if ((visionAngle - navX.getAngle()) < 0){
-                    driveTrain.tankDrive(-turnPower,turnPower);
+                turnPower = Math.min(turnPower, 0.3);
+                if (visionAngle < 0) {
+                    driveTrain.tankDrive(-turnPower, turnPower);
                 } else {
                     driveTrain.tankDrive(turnPower, -turnPower);
                 }

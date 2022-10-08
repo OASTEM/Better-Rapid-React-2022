@@ -50,9 +50,9 @@ public class Driving extends CommandBase {
   public void execute() {
     leftError = setpoint - driveTrain.getInchesFromNativeUnits(driveTrain.getLeftEncoderCount());
     rightError = setpoint - driveTrain.getInchesFromNativeUnits(driveTrain.getRightEncoderCount());
-    leftSpeed = kP * leftError;
+    leftSpeed = kP * leftError * 1.05;
     rightSpeed = kP * rightError;
-    driveTrain.tankDrive(leftSpeed, -rightSpeed);
+    driveTrain.tankDrive(leftSpeed, rightSpeed);
     SmartDashboard.putNumber("Right Speed", rightSpeed);
     SmartDashboard.putNumber("Left Speed", leftSpeed);
     SmartDashboard.putNumber("Left Error", leftError);
