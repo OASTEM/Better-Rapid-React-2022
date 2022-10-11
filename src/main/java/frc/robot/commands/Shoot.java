@@ -67,7 +67,8 @@ public class Shoot extends CommandBase {
         this.intake = intake;
         this.shooter = shooter;
         this.isAuto = true;
-        this.usingVision = false;
+        this.usingVision = true;
+        this.shooterDebug = false;
         this.shooterVelocity = shooterVelocity;
         this.rollerVelocity = rollerVelocity;
     }
@@ -102,73 +103,71 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
-        if (!isAuto){
-        int velocity = limelight.getVelocity();
-        visionAngle = limelight.getHorizontalAngle();
-        errorAngle = Math.abs(visionAngle);
-        if ((turnCounter > 5 && Math.abs(errorAngle) < 3)) {
-            driveTrain.tankDrive(0, 0);
-            System.out.println("Done turning!");
-            SmartDashboard.putNumber("Distance in Inches", limelight.getDistance());
-            shootWhenReady(-velocity, velocity);
-        } else if (Math.abs(errorAngle) < 3) {
-            turnCounter++;
+        if (!isAuto) {
+            int velocity = limelight.getVelocity();
             visionAngle = limelight.getHorizontalAngle();
-            navX.reset();
-            driveTrain.tankDrive(0, 0);
-            System.out.println(velocity);
-            shooter.setRollerVelocity(velocity);
-            shooter.setVelocity(-velocity);
-        } else {
-            double turnPower;
-            if (Math.abs(visionAngle) <= 10 && Math.abs(visionAngle) >= 0) {
-                turnPower = Math.pow(errorAngle, 0.580667) * 0.0148639 + 0.0752756;
+            errorAngle = Math.abs(visionAngle);
+            if ((turnCounter > 5 && Math.abs(errorAngle) < 3)) {
+                driveTrain.tankDrive(0, 0);
+                System.out.println("Done turning!");
+                SmartDashboard.putNumber("Distance in Inches", limelight.getDistance());
+                shootWhenReady(-velocity, velocity);
+            } else if (Math.abs(errorAngle) < 3) {
+                turnCounter++;
+                visionAngle = limelight.getHorizontalAngle();
+                navX.reset();
+                driveTrain.tankDrive(0, 0);
+                System.out.println(velocity);
+                shooter.setRollerVelocity(velocity);
+                shooter.setVelocity(-velocity);
             } else {
-                turnPower = Math.pow(errorAngle, 0.706689) * 0.0152966 + 0.0550678;
-            }
-            turnPower = Math.min(turnPower, 0.3);
-            if (visionAngle < 0) {
-                driveTrain.tankDrive(-turnPower, turnPower);
-            } else {
-                driveTrain.tankDrive(turnPower, -turnPower);
-            }
+                double turnPower;
+                if (Math.abs(visionAngle) <= 10 && Math.abs(visionAngle) >= 0) {
+                    turnPower = Math.pow(errorAngle, 0.580667) * 0.0148639 + 0.0752756;
+                } else {
+                    turnPower = Math.pow(errorAngle, 0.706689) * 0.0152966 + 0.0550678;
+                }
+                turnPower = Math.min(turnPower, 0.3);
+                if (visionAngle < 0) {
+                    driveTrain.tankDrive(-turnPower, turnPower);
+                } else {
+                    driveTrain.tankDrive(turnPower, -turnPower);
+                }
 
-        }
-    }
-    else{
-        System.out.println("Placeholder");
-        int velocity = limelight.getVelocity();
-        visionAngle = limelight.getHorizontalAngle();
-        errorAngle = Math.abs(visionAngle);
-        if ((turnCounter > 5 && Math.abs(errorAngle) < 3)) {
-            driveTrain.tankDrive(0, 0);
-            System.out.println("Done turning!");
-            SmartDashboard.putNumber("Distance in Inches", limelight.getDistance());
-            shootWhenReady(-shooterVelocity, rollerVelocity);
-        } else if (Math.abs(errorAngle) < 3) {
-            turnCounter++;
+            }
+        } else {
+            System.out.println("Placeholder");
+            int velocity = limelight.getVelocity();
             visionAngle = limelight.getHorizontalAngle();
-            navX.reset();
-            driveTrain.tankDrive(0, 0);
-            System.out.println(velocity);
-            shooter.setRollerVelocity(rollerVelocity);
-            shooter.setVelocity(-shooterVelocity);
-        } else {
-            double turnPower;
-            if (Math.abs(visionAngle) <= 10 && Math.abs(visionAngle) >= 0) {
-                turnPower = Math.pow(errorAngle, 0.580667) * 0.0148639 + 0.0752756;
+            errorAngle = Math.abs(visionAngle);
+            if ((turnCounter > 5 && Math.abs(errorAngle) < 3)) {
+                driveTrain.tankDrive(0, 0);
+                System.out.println("Done turning!");
+                SmartDashboard.putNumber("Distance in Inches", limelight.getDistance());
+                shootWhenReady(-shooterVelocity, rollerVelocity);
+            } else if (Math.abs(errorAngle) < 3) {
+                turnCounter++;
+                visionAngle = limelight.getHorizontalAngle();
+                driveTrain.tankDrive(0, 0);
+                System.out.println(velocity);
+                shooter.setRollerVelocity(rollerVelocity);
+                shooter.setVelocity(-shooterVelocity);
             } else {
-                turnPower = Math.pow(errorAngle, 0.706689) * 0.0152966 + 0.0550678;
-            }
-            turnPower = Math.min(turnPower, 0.3);
-            if (visionAngle < 0) {
-                driveTrain.tankDrive(-turnPower, turnPower);
-            } else {
-                driveTrain.tankDrive(turnPower, -turnPower);
-            }
+                double turnPower;
+                if (Math.abs(visionAngle) <= 10 && Math.abs(visionAngle) >= 0) {
+                    turnPower = Math.pow(errorAngle, 0.580667) * 0.0148639 + 0.0752756;
+                } else {
+                    turnPower = Math.pow(errorAngle, 0.706689) * 0.0152966 + 0.0550678;
+                }
+                turnPower = Math.min(turnPower, 0.3);
+                if (visionAngle < 0) {
+                    driveTrain.tankDrive(-turnPower, turnPower);
+                } else {
+                    driveTrain.tankDrive(turnPower, -turnPower);
+                }
 
+            }
         }
-    }
     }
 
     private void shootWhenReady(double velocity, double backVelocity) {
