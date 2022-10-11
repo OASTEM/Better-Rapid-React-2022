@@ -110,6 +110,8 @@ public class Shoot extends CommandBase {
           visionAngle = limelight.getHorizontalAngle();
           navX.reset();
           driveTrain.tankDrive(0, 0);
+          shooter.setRollerVelocity(100);
+          shooter.setVelocity(100);
         }
         else {
           double turnPower;
