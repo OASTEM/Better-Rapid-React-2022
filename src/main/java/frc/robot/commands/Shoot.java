@@ -33,6 +33,7 @@ public class Shoot extends CommandBase {
     private int turnCounter;
     private boolean shooterDebug = false;
     private boolean shooting;
+    private double errorAngle;
 
     // TELEOP VISION
     public Shoot(Intake intake, Shooter shooter, Limelight limelight, DriveTrain driveTrain, NavX navX) {
@@ -97,41 +98,34 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
-        if (usingVision) {
-            double errorAngle = Math.abs(visionAngle - navX.getAngle());
-            if (shooting){
-                shootWhenReady(visionFrontRPM, visionBackRPM);
-            } else if (turnCounter > 3 && Math.abs(errorAngle) < 1) {
-                visionFrontRPM = (int) limelight.getFrontRPM();
-                visionBackRPM = (int) limelight.getBackRPM();
-                shooter.setVelocity(visionFrontRPM);
-                shooter.setRollerVelocity(visionBackRPM);
-                shooting = true;
-                driveTrain.tankDrive(0, 0);
-            } else if (Math.abs(errorAngle) < 1) {
-                turnCounter ++;
-                visionAngle = limelight.getHorizontalAngle();
-                navX.reset();
-                driveTrain.tankDrive(0, 0);
-
-            } else {
-                double turnPower;
-                if (Math.abs(visionAngle)<=10 && Math.abs(visionAngle) >= 0){
-                    turnPower = Math.pow(errorAngle, 0.580667)*0.0148639+0.0752756;
-                }
-                else{
-                    turnPower = Math.pow(errorAngle,0.706689)*0.0152966+0.0550678;
-                }
-                Math.min(turnPower, 0.3);
-                if ((visionAngle - navX.getAngle()) < 0){
-                    driveTrain.tankDrive(-turnPower,turnPower);
-                } else {
-                    driveTrain.tankDrive(turnPower, -turnPower);
-                }
-            }
-        } else {
-            shootWhenReady(isAuto ? shooterVelocity : suppliedVelocity.getAsInt(),
-                    isAuto ? rollerVelocity : suppliedRollerVelocity.getAsInt());
+        visionAngle = limelight.getHorizontalAngle();
+        errorAngle = Math.abs(visionAngle);
+        if ((turnCounter > 5 && Math.abs(errorAngle) < 3)){
+          driveTrain.tankDrive(0, 0);
+          System.out.println("Done turning!");
+          shootWhenReady(3, 3);
+        }
+        else if (Math.abs(errorAngle) < 3){
+          turnCounter ++;
+          visionAngle = limelight.getHorizontalAngle();
+          navX.reset();
+          driveTrain.tankDrive(0, 0);
+        }
+        else {
+          double turnPower;
+          if (Math.abs(visionAngle)<=10 && Math.abs(visionAngle) >= 0){
+              turnPower = Math.pow(errorAngle, 0.580667)*0.0148639+0.0752756;
+          }
+          else{
+              turnPower = Math.pow(errorAngle,0.706689)*0.0152966+0.0550678;
+          }
+          turnPower = Math.min(turnPower, 0.3);
+          if (visionAngle < 0){
+              driveTrain.tankDrive(-turnPower,turnPower);
+          } else {
+              driveTrain.tankDrive(turnPower, -turnPower);
+          }
+    
         }
     }
 
