@@ -59,7 +59,7 @@ public class Shoot extends CommandBase {
         this.suppliedRollerVelocity = suppliedRollerVelocity;
         this.shuffleBoard = shuffleBoard;
     }
-    
+
     // AUTO
     public Shoot(Intake intake, Shooter shooter, int shooterVelocity, int rollerVelocity) {
         addRequirements(intake, shooter);
@@ -76,13 +76,13 @@ public class Shoot extends CommandBase {
         visionAngle = limelight.getHorizontalAngle();
         navX.reset();
         errorAngle = Math.abs(visionAngle);
-        if (shooterDebug){
+        if (shooterDebug) {
             shooter.setPIDFront(shuffleBoard.getShooterPID());
         }
         if (usingVision) {
             shooting = false;
             visionAngle = limelight.getHorizontalAngle();
-            
+
             navX.reset();
             turnCounter = 0;
 
@@ -101,31 +101,36 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
+        System.out.println("amdapmdma");
         if (usingVision) {
             errorAngle = Math.abs(limelight.getHorizontalAngle());
             visionAngle = limelight.getHorizontalAngle();
-            if (shooting){
+            if (shooting) {
+                System.out.println("About to shoot!");
                 shootWhenReady(visionFrontRPM, visionBackRPM);
             } else if (turnCounter > 3 && Math.abs(errorAngle) < 3) {
-                visionFrontRPM = (int) limelight.getFrontRPM();
-                visionBackRPM = (int) limelight.getBackRPM();
+                System.out.println("Ready to shoot!");
+                visionFrontRPM = 2500;
+                visionBackRPM = -2500;
+                // visionFrontRPM = (int) limelight.getFrontRPM();
+                // visionBackRPM = (int) limelight.getBackRPM();
                 shooter.setVelocity(visionFrontRPM);
                 shooter.setRollerVelocity(visionBackRPM);
                 shooting = true;
                 driveTrain.tankDrive(0, 0);
             } else if (Math.abs(errorAngle) < 3) {
-                turnCounter ++;
+                turnCounter++;
                 visionAngle = limelight.getHorizontalAngle();
                 navX.reset();
                 driveTrain.tankDrive(0, 0);
+                System.out.println("Not moving");
 
             } else {
                 double turnPower;
-                if (Math.abs(visionAngle)<=10 && Math.abs(visionAngle) >= 0){
-                    turnPower = Math.pow(errorAngle, 0.580667)*0.0148639+0.0752756;
-                }
-                else{
-                    turnPower = Math.pow(errorAngle,0.706689)*0.0152966+0.0550678;
+                if (Math.abs(visionAngle) <= 10 && Math.abs(visionAngle) >= 0) {
+                    turnPower = Math.pow(errorAngle, 0.580667) * 0.0148639 + 0.0752756;
+                } else {
+                    turnPower = Math.pow(errorAngle, 0.706689) * 0.0152966 + 0.0550678;
                 }
                 turnPower = Math.min(turnPower, 0.3);
                 if (visionAngle < 0) {
@@ -141,19 +146,28 @@ public class Shoot extends CommandBase {
     }
 
     private void shootWhenReady(double velocity, double backVelocity) {
+        System.out.println("Velocity " + velocity);
+        System.out.println("backVelocity " + backVelocity);
         double error = Math.abs(velocity - shooter.getLeftVelocity());
         double errorBack = Math.abs(backVelocity - shooter.getBackLeftVelocity());
         SmartDashboard.putNumber("Front Shooter LEFT RPM IMPORTANTE", shooter.getLeftVelocity());
         SmartDashboard.putNumber("Front Shooter RIGHT RPM IMPORTANTE", shooter.getRightVelocity());
         SmartDashboard.putNumber("Back Shooter RPM IMPORTANTE", shooter.getBackLeftVelocity());
+        System.out.println("Shooter motors getting ready");
         if (error <= Constants.Shooter.RPM_TOLERANCE && errorBack <= Constants.Shooter.RPM_TOLERANCE) {
             rpmCounter++;
+            System.out.println("rpm counter++");
+        }
+        else{
+            System.out.println(error + " Not back**************");
+            System.out.println(errorBack + " Back******************");
         }
         if (rpmCounter > 15) {
             if (pulseCounter < 10) {
                 intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
                 intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
                 pulseCounter++;
+                System.out.println("rpm over 15");
             } else if (rpmCounter < 50) {
                 intake.intakeTopMotor(0);
                 intake.intakeBottomMotor(0);

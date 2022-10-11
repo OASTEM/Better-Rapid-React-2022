@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Limelight;
@@ -42,6 +43,8 @@ public class AimAtTarget extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    SmartDashboard.putNumber("Distance in Inches", limelight.getDistance());
+    SmartDashboard.putNumber("Limelight Angle", limelight.getLimelightAngle());
     visionAngle = limelight.getHorizontalAngle();
     errorAngle = Math.abs(visionAngle);
     System.out.println("NavX " + navX.getAngle());
@@ -57,7 +60,7 @@ public class AimAtTarget extends CommandBase {
       visionAngle = limelight.getHorizontalAngle();
       navX.reset();
       driveTrain.tankDrive(0, 0);
-    }
+    } 
     else{
       double turnPower;
       if (Math.abs(visionAngle)<=10 && Math.abs(visionAngle) >= 0){
