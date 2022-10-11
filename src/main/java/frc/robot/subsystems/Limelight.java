@@ -80,8 +80,12 @@ public class Limelight extends SubsystemBase {
   public double getHorizontalAngle(){
     return x;
   }
-
   public double getVerticalAngle(){
     return y;
+  }
+  public int getVelocity(){
+    double distance = getDistance();
+    int velocity = (int) Math.floor((-0.0322576 * Math.pow(distance, 2) + (26.4813 * distance) + 291.877));
+    return velocity;
   }
 }
