@@ -11,11 +11,10 @@ import frc.robot.commands.Climber.ClimbUp;
 import frc.robot.commands.Climber.PivotRelative;
 import frc.robot.commands.DriveTrain.ArcadeDrive;
 import frc.robot.commands.DriveTrain.DriveStraight;
-import frc.robot.commands.DriveTrain.Test;
+import frc.robot.commands.AimAtTarget;
 import frc.robot.commands.Calibration;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.Shoot;
-import frc.robot.commands.AimAtTarget;
 
 import frc.robot.subsystems.Climber;
 // import frc.robot.subsystems.ColorSensor;
@@ -25,10 +24,10 @@ import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Pivots;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
-import frc.robot.subsystems.Limelight;
 import frc.robot.utils.Constants;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.ShuffleBoard;
+import frc.robot.subsystems.Limelight;
 // a member was here
 public class RobotContainer {
   private final LogitechGamingPad drivePad = new LogitechGamingPad(0);
@@ -78,7 +77,8 @@ public class RobotContainer {
     if (Constants.Shooter.DEBUG_MODE){
       leftBumper.whileHeld(new Shoot(intake, shooter, () -> shuffleBoard.getShoot(), () -> shuffleBoard.getRoller(), shuffleBoard));
     } else {
-      leftBumper.whileHeld(new AimAtTarget(driveTrain, limelight, navX));
+      //leftBumper.whileHeld(new AimAtTarget(driveTrain, limelight, navX));
+      leftBumper.whileHeld(new Shoot(intake, shooter, limelight, driveTrain, navX));
     }
 
     // driveStartButton.whenPressed(new Calibration(climber, pivots, intake, driveTrain));
@@ -86,8 +86,7 @@ public class RobotContainer {
 
     driveX.whileHeld(new ConditionalCommand(new AutoClimb(climber, pivots), new InstantCommand(), driveTrain::getClimbing));
     driveY.whileHeld(new ConditionalCommand(new ClimbUp(climber, Constants.Climber.UP.s), new InstantCommand(), driveTrain::getClimbing));
-    driveA.whileHeld(new Test(driveTrain, limelight));
-    //driveA.whileHeld(new ConditionalCommand(new ClimbDown(climber), new InstantCommand(), driveTrain::getClimbing));
+    driveA.whileHeld(new ConditionalCommand(new ClimbDown(climber), new InstantCommand(), driveTrain::getClimbing));
 
     driveB.whenPressed(new InstantCommand(driveTrain::toggleSlowMode));
   }
@@ -100,7 +99,7 @@ public class RobotContainer {
     opB.whileHeld(new PivotRelative(pivots, -10, Constants.Pivot.FAST_PID.s));
     opRightBumper.whileHeld(new IntakeBalls(intake));
     opStartButton.whenPressed(new Calibration(climber, pivots, intake, driveTrain));
-    opLeftBumper.whileHeld(new Shoot(intake, shooter, () -> shuffleBoard.getShooterVelocity(), () -> shuffleBoard.getRollerVelocity(), shuffleBoard).beforeStarting(new WaitCommand(1)).alongWith(new DriveStraight(driveTrain, shuffleBoard.getMoveBack())));
+    //opLeftBumper.whileHeld(new Shoot(intake, shooter, () -> shuffleBoard.getShooterVelocity(), () -> shuffleBoard.getRollerVelocity(), shuffleBoard).beforeStarting(new WaitCommand(1)).alongWith(new DriveStraight(driveTrain, () -> shuffleBoard.getMoveBack())));
   }
 
   public Command getAutonomousCommand() {
