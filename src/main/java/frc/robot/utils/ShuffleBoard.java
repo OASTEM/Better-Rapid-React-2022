@@ -10,6 +10,7 @@ import frc.robot.commands.Auto.FourBallAuto;
 import frc.robot.commands.Auto.TwoBallAuto;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Shooter;
 
@@ -27,8 +28,9 @@ public class ShuffleBoard {
   private Shooter shooter;
   private DriveTrain driveTrain;
   private NavX navX;
+  private Limelight limelight;
 
-  public ShuffleBoard(Intake intake, Shooter shooter, DriveTrain driveTrain, NavX navX) {
+  public ShuffleBoard(Intake intake, Shooter shooter, DriveTrain driveTrain, NavX navX, Limelight limelight) {
     this.intake = intake;
     this.shooter = shooter;
     this.driveTrain = driveTrain;
@@ -71,17 +73,17 @@ public class ShuffleBoard {
   public Command getAutonomousCommand() {
     switch (autoChoose.getSelected()) {
       case OneBall:
-        return new OneBallAuto(intake, shooter, driveTrain);
+        return new OneBallAuto(intake, shooter, driveTrain, limelight, navX);
       case TwoBall_1:
-        return new TwoBallAuto(intake, shooter, driveTrain, navX, 160);
+        return new TwoBallAuto(intake, shooter, driveTrain, navX, 160, limelight);
       case TwoBall_2:
-        return new TwoBallAuto(intake, shooter, driveTrain, navX, -170);
+        return new TwoBallAuto(intake, shooter, driveTrain, navX, -170, limelight);
       case TwoBall_3:
-        return new TwoBallAuto(intake, shooter, driveTrain, navX, 180);
+        return new TwoBallAuto(intake, shooter, driveTrain, navX, 180, limelight);
       case FourBall:
-        return new FourBallAuto(intake, shooter, driveTrain, navX);
+        return new FourBallAuto(intake, shooter, driveTrain, navX, limelight);
       default:
-        return new OneBallAuto(intake, shooter, driveTrain);
+        return new OneBallAuto(intake, shooter, driveTrain, limelight, navX);
 
     }
   }

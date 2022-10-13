@@ -8,14 +8,18 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.DriveTrain.Driving;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.NavX;
 
 public class OneBallAuto extends SequentialCommandGroup {
 
-  public OneBallAuto(Intake intake, Shooter shooter, DriveTrain driveTrain) {
+  public OneBallAuto(Intake intake, Shooter shooter, DriveTrain driveTrain, Limelight limelight, NavX navX) {
     addCommands(
-        //new WaitCommand(2),
-        //new Driving(driveTrain, 10, 0.014));//,
-        new Shoot(intake, shooter, 2000, 2000));
+        new WaitCommand(2),
+        new Driving(driveTrain, 10, 0.014).withTimeout(2));//,
+        //new Shoot(intake, shooter, limelight, 2000, 2000, driveTrain, navX).withTimeout(7));
+        //new Shoot(intake, shooter, limelight, driveTrain, navX).withTimeout(5));
+        // new Driving(driveTrain, 10, 0.014).withTimeout(2));
         //new Shoot(intake, shooter, -2600, 1000).withTimeout(5),
         //new DriveStraight(driveTrain, () -> -100).withTimeout(5));
   }

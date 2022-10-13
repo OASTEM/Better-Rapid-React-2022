@@ -62,7 +62,7 @@ public class RobotContainer {
   private final JoystickButton opStartButton = new JoystickButton(opPad, 8);
 
   private final ShuffleBoard shuffleBoard = new ShuffleBoard(
-      intake, shooter, driveTrain, navX);
+      intake, shooter, driveTrain, navX, limelight);
 
   public RobotContainer() {
     driveTrain.setDefaultCommand(new ArcadeDrive(driveTrain, drivePad));
