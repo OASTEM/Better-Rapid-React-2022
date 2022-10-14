@@ -103,7 +103,8 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return shuffleBoard.getAutonomousCommand();
+    //return shuffleBoard.getAutonomousCommand();
+    return new Shoot(intake, shooter, limelight, driveTrain, navX);
   }
 
   public Command calibrate() {

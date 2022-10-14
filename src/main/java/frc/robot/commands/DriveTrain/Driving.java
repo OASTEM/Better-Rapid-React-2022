@@ -23,7 +23,7 @@ public class Driving extends CommandBase {
   double leftSpeed = 0;
   double rightSpeed = 0;
 
-  private Encoder encoder = new Encoder(0, 1, false, EncodingType.k4X);
+  //private Encoder encoder = new Encoder(0, 1, false, EncodingType.k4X);
 
 
   /** Creates a new Driving. */

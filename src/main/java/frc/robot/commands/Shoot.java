@@ -63,7 +63,7 @@ public class Shoot extends CommandBase {
 
     // AUTO
     public Shoot(Intake intake, Shooter shooter, Limelight limelight, int shooterVelocity, int rollerVelocity, DriveTrain driveTrain, NavX navX) {
-        addRequirements(intake, shooter, limelight, driveTrain);
+        //addRequirements(intake, shooter, limelight, driveTrain);
         this.intake = intake;
         this.shooter = shooter;
         this.isAuto = true;
@@ -103,7 +103,7 @@ public class Shoot extends CommandBase {
 
     @Override
     public void execute() {
-        if (!isAuto) {
+        if (isAuto == false) {
             int velocity = limelight.getVelocity();
             visionAngle = limelight.getHorizontalAngle();
             errorAngle = Math.abs(visionAngle);
