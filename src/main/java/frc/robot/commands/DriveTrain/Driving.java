@@ -22,6 +22,7 @@ public class Driving extends CommandBase {
   double rightError = 0;
   double leftSpeed = 0;
   double rightSpeed = 0;
+  int count = 0;
 
   //private Encoder encoder = new Encoder(0, 1, false, EncodingType.k4X);
 
@@ -53,6 +54,12 @@ public class Driving extends CommandBase {
     leftSpeed = kP * leftError * 1.05;
     rightSpeed = kP * rightError;
     driveTrain.tankDrive(leftSpeed, rightSpeed);
+    if (leftError < 10 && rightError < 10){
+      count++;
+    }
+    else{
+      count = 0;
+    }
     SmartDashboard.putNumber("Right Speed", rightSpeed);
     SmartDashboard.putNumber("Left Speed", leftSpeed);
     SmartDashboard.putNumber("Left Error", leftError);
@@ -61,11 +68,15 @@ public class Driving extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    driveTrain.stop();
+    driveTrain.printEncoders();
+    driveTrain.printInches();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return count >= 10;
   }
 }

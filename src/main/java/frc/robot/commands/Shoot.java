@@ -183,6 +183,7 @@ public class Shoot extends CommandBase {
             rpmCounter++;
             //System.out.println("rpm counter++");
         }
+        if (isAuto == false){
         if (rpmCounter > 15) {
             if (pulseCounter < 10) {
                 intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
@@ -200,6 +201,13 @@ public class Shoot extends CommandBase {
                 rpmCounter = 0;
             }
         }
+    }
+    else{
+        if (rpmCounter > 10){
+            intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
+            intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
+        }
+    }
     }
 
     @Override

@@ -15,7 +15,7 @@ import frc.robot.commands.AimAtTarget;
 import frc.robot.commands.Calibration;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.Shoot;
-
+import frc.robot.commands.Auto.OneBallAuto;
 import frc.robot.subsystems.Climber;
 // import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.DriveTrain;
@@ -104,7 +104,8 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     //return shuffleBoard.getAutonomousCommand();
-    return new Shoot(intake, shooter, limelight, driveTrain, navX);
+    return new OneBallAuto(intake, shooter, driveTrain, limelight, navX);
+    // return new Shoot(intake, shooter, limelight, driveTrain, navX);
   }
 
   public Command calibrate() {
