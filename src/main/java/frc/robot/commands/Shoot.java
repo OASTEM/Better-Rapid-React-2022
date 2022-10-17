@@ -184,7 +184,7 @@ public class Shoot extends CommandBase {
         // System.out.println("Shooter motors getting ready");
         if (error <= Constants.Shooter.RPM_TOLERANCE && errorBack <= Constants.Shooter.RPM_TOLERANCE) {
             rpmCounter++;
-            // System.out.println("rpm counter++");
+            // System.out.println("rpm counter++")
         }
         if (isAuto == false) {
             if (rpmCounter > 15) {
