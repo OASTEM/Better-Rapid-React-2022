@@ -186,30 +186,21 @@ public class Shoot extends CommandBase {
             rpmCounter++;
             // System.out.println("rpm counter++")
         }
-        if (isAuto == false) {
+        else if (isAuto == false) {
             if (rpmCounter > 15) {
-                if (pulseCounter < 10) {
+                if (pulseCounter < 25) {
                     intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
                     intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
                     pulseCounter++;
-                    // System.out.println("rpm over 15");
-                } else if (rpmCounter < 50) {
-                    intake.intakeTopMotor(0);
-                    intake.intakeBottomMotor(0);
-                    pulseCounter++;
-                } else {
-                    intake.intakeTopMotor(0);
-                    intake.intakeBottomMotor(0);
-                    pulseCounter = 0;
-                    rpmCounter = 0;
-                }
+                    // System.out.println("rpm over 15")
             }
-        } else {
+        }
+     } else {
             if (rpmCounter > 10) {
                 intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
                 intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
             }
-        }
+    }
     }
 
     @Override
