@@ -66,6 +66,16 @@ public class Limelight extends SubsystemBase {
     angle = Math.toDegrees(angle);
     return angle;
   }
+  
+  public double getFrontRPM()  {
+    return 2700;
+    //return 215685/y - 4550;
+  }
+
+  public double getBackRPM()  {
+    return -2700;
+    //return -107843/y + 2275;
+  }
 
   public double getHorizontalAngle(){
     return x;
