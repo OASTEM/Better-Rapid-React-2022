@@ -81,11 +81,12 @@ public class RobotContainer {
     driveStartButton.whenPressed(new InstantCommand(driveTrain::climbingTrue));
 
     //driveX.whileHeld(new ConditionalCommand(new AutoClimb(climber, pivots), new InstantCommand(), driveTrain::getClimbing));
-    driveX.whileHeld(new PivotRelative(pivots, 5, Constants.Pivot.FAST_PID.s));
+    driveX.whenPressed(new PivotRelative(pivots, 5, Constants.Pivot.FAST_PID.s));
+    driveB.whenPressed(new PivotRelative(pivots, -5, Constants.Pivot.FAST_PID.s));
     driveY.whileHeld(new ConditionalCommand(new ClimbUp(climber, Constants.Climber.UP.s), new InstantCommand(), driveTrain::getClimbing));
     driveA.whileHeld(new ConditionalCommand(new ClimbDown(climber), new InstantCommand(), driveTrain::getClimbing));
 
-    driveB.whenPressed(new InstantCommand(driveTrain::toggleSlowMode));
+    //driveB.whenPressed(new InstantCommand(driveTrain::toggleSlowMode));
   }
 
   public void configureOPButtonBindings(){
