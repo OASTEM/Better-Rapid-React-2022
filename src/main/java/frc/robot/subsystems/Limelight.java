@@ -88,4 +88,11 @@ public class Limelight extends SubsystemBase {
     int velocity = (int) Math.floor((-0.0322576 * Math.pow(distance, 2) + (26.4813 * distance) + 291.877));
     return velocity;
   }
+
+  public int debugVelocity(){
+    double velo = SmartDashboard.getNumber("Debug Velo Lime", 0);
+    int newVelo = (int) velo;
+    return newVelo;
+  }
+
 }

@@ -112,8 +112,14 @@ public class Shoot extends CommandBase {
                 visionAngle = limelight.getHorizontalAngle();
                 driveTrain.tankDrive(0, 0);
                 System.out.println(velocity);
+                if (!shooterDebug){
                 shooter.setRollerVelocity(velocity);
                 shooter.setVelocity(-velocity);
+                }
+                else{
+                    shooter.setRollerVelocity(limelight.debugVelocity());
+                    shooter.setVelocity(limelight.debugVelocity());
+                }
             } else {
                 double turnPower;
                 if (Math.abs(visionAngle) <= 10 && Math.abs(visionAngle) >= 0) {
