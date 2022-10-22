@@ -3,15 +3,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+//import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Climber.AutoClimb;
 import frc.robot.commands.Climber.ClimbDown;
 import frc.robot.commands.Climber.ClimbUp;
 import frc.robot.commands.Climber.PivotRelative;
 import frc.robot.commands.DriveTrain.ArcadeDrive;
-import frc.robot.commands.DriveTrain.DriveStraight;
-import frc.robot.commands.AimAtTarget;
 import frc.robot.commands.Calibration;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.Shoot;
@@ -23,7 +21,6 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Pivots;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Vision;
 import frc.robot.utils.Constants;
 import frc.robot.utils.LogitechGamingPad;
 import frc.robot.utils.ShuffleBoard;
@@ -39,7 +36,6 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final NavX navX = new NavX();
   private final Pivots pivots = new Pivots();
-  private final Vision vision = new Vision();
   private final Limelight limelight = new Limelight();
   // private final ColorSensor colorSensor = new ColorSensor();
 
@@ -56,7 +52,7 @@ public class RobotContainer {
   private final JoystickButton opB = new JoystickButton(opPad, 2);
   private final JoystickButton opX = new JoystickButton(opPad, 3);
   private final JoystickButton opY = new JoystickButton(opPad, 4);
-  private final JoystickButton opLeftBumper = new JoystickButton(opPad, 5);
+  //private final JoystickButton opLeftBumper = new JoystickButton(opPad, 5);
   private final JoystickButton opRightBumper = new JoystickButton(opPad, 6);
   // private final JoystickButton opBackButton = new JoystickButton(opPad, 7);
   private final JoystickButton opStartButton = new JoystickButton(opPad, 8);
@@ -78,7 +74,7 @@ public class RobotContainer {
       leftBumper.whileHeld(new Shoot(intake, shooter, () -> shuffleBoard.getShoot(), () -> shuffleBoard.getRoller(), shuffleBoard));
     } else {
       //leftBumper.whileHeld(new AimAtTarget(driveTrain, limelight, navX));
-      leftBumper.whileHeld(new Shoot(intake, shooter, limelight, driveTrain, navX));
+      leftBumper.whileHeld(new Shoot(intake, shooter, limelight, driveTrain));
     }
 
     // driveStartButton.whenPressed(new Calibration(climber, pivots, intake, driveTrain));

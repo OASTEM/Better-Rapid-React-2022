@@ -8,7 +8,6 @@ import frc.robot.utils.Constants;
 import frc.robot.utils.ShuffleBoard;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.NavX;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Limelight;
 
@@ -16,7 +15,6 @@ public class Shoot extends CommandBase {
     private Intake intake;
     private Shooter shooter;
     private DriveTrain driveTrain;
-    private NavX navX;
     Limelight limelight;
     private ShuffleBoard shuffleBoard;
     private boolean usingVision;
@@ -27,23 +25,20 @@ public class Shoot extends CommandBase {
     private IntSupplier suppliedRollerVelocity;
     private int pulseCounter;
     private int rpmCounter;
-    private int visionFrontRPM;
-    private int visionBackRPM;
     public double visionAngle;
     private int turnCounter;
     private boolean shooterDebug = false;
-    private boolean shooting;
     private double errorAngle;
+    //private boolean shooting;
 
     // TELEOP VISION
-    public Shoot(Intake intake, Shooter shooter, Limelight limelight, DriveTrain driveTrain, NavX navX) {
+    public Shoot(Intake intake, Shooter shooter, Limelight limelight, DriveTrain driveTrain) {
         addRequirements(intake, shooter, limelight, driveTrain);
         this.intake = intake;
         this.shooter = shooter;
         this.isAuto = false;
         this.limelight = limelight;
         this.usingVision = true;
-        this.navX = navX;
         this.driveTrain = driveTrain;
     }
 
@@ -62,7 +57,7 @@ public class Shoot extends CommandBase {
     }
 
     // AUTO
-    public Shoot(Intake intake, Shooter shooter, Limelight limelight, int shooterVelocity, int rollerVelocity, DriveTrain driveTrain, NavX navX) {
+    public Shoot(Intake intake, Shooter shooter, Limelight limelight, int shooterVelocity, int rollerVelocity, DriveTrain driveTrain) {
         //addRequirements(intake, shooter, limelight, driveTrain);
         this.intake = intake;
         this.shooter = shooter;
@@ -71,7 +66,6 @@ public class Shoot extends CommandBase {
         this.usingVision = false;
         this.driveTrain = driveTrain;
         this.shooterDebug = false;
-        this.navX = navX;
         this.shooterVelocity = shooterVelocity;
         this.rollerVelocity = rollerVelocity;
     }
@@ -79,12 +73,13 @@ public class Shoot extends CommandBase {
     @Override
     public void initialize() {
         visionAngle = limelight.getHorizontalAngle();
+        
         errorAngle = Math.abs(visionAngle);
         if (shooterDebug) {
             shooter.setPIDFront(shuffleBoard.getShooterPID());
         }
         if (usingVision) {
-            shooting = false;
+            //shooting = false;
             visionAngle = limelight.getHorizontalAngle();
             turnCounter = 0;
 
