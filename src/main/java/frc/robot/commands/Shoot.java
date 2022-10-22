@@ -104,14 +104,14 @@ public class Shoot extends CommandBase {
             errorAngle = Math.abs(visionAngle);
             if ((turnCounter > 5 && Math.abs(errorAngle) < 3)) {
                 driveTrain.tankDrive(0, 0);
-                //System.out.println("Done turning!");
+                // System.out.println("Done turning!");
                 SmartDashboard.putNumber("Distance in Inches", limelight.getDistance());
                 shootWhenReady(-velocity, velocity);
             } else if (Math.abs(errorAngle) < 3) {
                 turnCounter++;
                 visionAngle = limelight.getHorizontalAngle();
                 driveTrain.tankDrive(0, 0);
-                //System.out.println(velocity);
+                System.out.println(velocity);
                 shooter.setRollerVelocity(velocity);
                 shooter.setVelocity(-velocity);
             } else {
@@ -130,19 +130,19 @@ public class Shoot extends CommandBase {
 
             }
         } else {
-            //System.out.println("Placeholder");
+            // System.out.println("Placeholder");
             visionAngle = limelight.getHorizontalAngle();
             errorAngle = Math.abs(visionAngle);
             if ((turnCounter > 5 && Math.abs(errorAngle) < 3)) {
                 driveTrain.tankDrive(0, 0);
-                //System.out.println("Done turning!");
+                // System.out.println("Done turning!");
                 SmartDashboard.putNumber("Distance in Inches", limelight.getDistance());
                 shootWhenReady(-shooterVelocity, rollerVelocity);
             } else if (Math.abs(errorAngle) < 3) {
                 turnCounter++;
                 visionAngle = limelight.getHorizontalAngle();
                 driveTrain.tankDrive(0, 0);
-                //System.out.println(velocity);
+                // System.out.println(velocity);
                 shooter.setRollerVelocity(rollerVelocity);
                 shooter.setVelocity(-shooterVelocity);
             } else {
@@ -164,44 +164,36 @@ public class Shoot extends CommandBase {
     }
 
     private void shootWhenReady(double velocity, double backVelocity) {
-        //System.out.println("Velocity " + velocity);
-        //System.out.println("backVelocity " + backVelocity);
+        // System.out.println("Velocity " + velocity);
+        // System.out.println("backVelocity " + backVelocity);
         double error = Math.abs(velocity - shooter.getLeftVelocity());
         double errorBack = Math.abs(backVelocity - shooter.getBackLeftVelocity());
-        //System.out.println(error + " Not back**************");
-        //System.out.println(errorBack + " Back******************");
+        System.out.println(error + " Not back**************");
+        System.out.println(errorBack + " Back******************");
         SmartDashboard.putNumber("Front Shooter LEFT RPM IMPORTANTE", shooter.getLeftVelocity());
         SmartDashboard.putNumber("Front Shooter RIGHT RPM IMPORTANTE", shooter.getRightVelocity());
         SmartDashboard.putNumber("Back Shooter RPM IMPORTANTE", shooter.getBackLeftVelocity());
-        //System.out.println("Shooter motors getting ready");
+        SmartDashboard.putNumber("Error", velocity - shooter.getLeftVelocity());
+        SmartDashboard.putNumber("Back Error", backVelocity - shooter.getBackLeftVelocity());
+        // System.out.println("Shooter motors getting ready");
         if (error <= Constants.Shooter.RPM_TOLERANCE && errorBack <= Constants.Shooter.RPM_TOLERANCE) {
             rpmCounter++;
-            //System.out.println("rpm counter++");
+            // System.out.println("rpm counter++")
         }
-        if (isAuto == false){
-        if (rpmCounter > 15) {
-            if (pulseCounter < 10) {
-                intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
-                intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
-                pulseCounter++;
-                //System.out.println("rpm over 15");
-            } else if (rpmCounter < 50) {
-                intake.intakeTopMotor(0);
-                intake.intakeBottomMotor(0);
-                pulseCounter++;
-            } else {
-                intake.intakeTopMotor(0);
-                intake.intakeBottomMotor(0);
-                pulseCounter = 0;
-                rpmCounter = 0;
+        else if (isAuto == false) {
+            if (rpmCounter > 15) {
+                if (pulseCounter < 25) {
+                    intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
+                    intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
+                    pulseCounter++;
+                    // System.out.println("rpm over 15")
             }
         }
-    }
-    else{
-        if (rpmCounter > 10){
-            intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
-            intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
-        }
+     } else {
+            if (rpmCounter > 10) {
+                intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
+                intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
+            }
     }
     }
 
