@@ -25,15 +25,19 @@ public class Limelight extends SubsystemBase {
   private NetworkTableEntry tx; 
   private NetworkTableEntry ty; 
   private NetworkTableEntry ta;
+  private NetworkTableEntry tv;
   public double x;
   public double y;
   public double area;
+  public double isTarget;
   private NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  public boolean targets;
 
   public Limelight() {
     this.tx = table.getEntry("tx");
     this.ty = table.getEntry("ty");
     this.ta = table.getEntry("ta");
+    this.tv = table.getEntry("tv");
   }
 
   @Override
@@ -41,12 +45,19 @@ public class Limelight extends SubsystemBase {
     this.x = tx.getDouble(0.0);
     this.y = ty.getDouble(0.0);
     this.area = ta.getDouble(0.0);
+    this.isTarget = tv.getDouble(0.0);
+    if (isTarget == 0) {
+      targets = false;
+    } else {
+      targets = true;
+    }
 
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
-
-
+    SmartDashboard.putBoolean("Targets", targets);
+    SmartDashboard.putNumber("Angle", getLimelightAngle());
+    SmartDashboard.putNumber("Distance", getDistance());
   }
 
   public double getDistance(){
@@ -60,7 +71,7 @@ public class Limelight extends SubsystemBase {
     double length = 119;
     // In inches adjacent
     double angle = (goalHeight - limelightHeight) / length;
-    System.out.println("Y Value: " + ty.getDouble(0.0));
+    //System.out.println("Y Value: " + ty.getDouble(0.0));
     angle = Math.atan(angle);
     angle = Math.abs(angle - Math.toRadians(ty.getDouble(0.0)));
     angle = Math.toDegrees(angle);
