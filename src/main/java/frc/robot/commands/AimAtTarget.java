@@ -20,13 +20,7 @@ public class AimAtTarget extends CommandBase {
   private double visionAngle;
   private int turnCounter;
   private double errorAngle;
-  private final double kP = 1;
-  private final double kI = 0;
-  private final double kD = 0;
-  private double integral, previousError, setpoint, derivative = 0;
-  private double error, rcw;
-  private long prevTimeMillis = System.currentTimeMillis();
-  private double timeChange = 0.0;
+
 
 
   public AimAtTarget(DriveTrain driveTrain, Limelight limelight, NavX navX) {
@@ -87,19 +81,6 @@ public class AimAtTarget extends CommandBase {
   @Override
   public void end(boolean interrupted) {}
 
-  public void setSetpoint(int setpoint){
-    this.setpoint = setpoint;
-  }
-
-  public void PID() {
-    timeChange = System.currentTimeMillis() - prevTimeMillis;
-    prevTimeMillis = System.currentTimeMillis();
-
-    error = setpoint - limelight.getHorizontalAngle();
-    this.integral += error * timeChange;
-    derivative = (error - this.previousError) / timeChange;
-    this.rcw = kP * error + kI * integral + kD * derivative;
-  }
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
