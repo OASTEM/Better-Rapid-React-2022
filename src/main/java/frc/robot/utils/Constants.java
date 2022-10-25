@@ -31,12 +31,12 @@ public final class Constants {
 
   public final static class Shooter {
     public static final double PUSH_SPEED = 1;
-    public static final boolean DEBUG_MODE = false;
+    public static final boolean DEBUG_MODE = true;
     public static final Shots FENDER = new Shots(-2650, 1000, -24);
     public static final Shots FENDER_LOW = new Shots(-2000, 500, 0);
     public static final Shots LAUNCHPAD = new Shots(-4000, 4000, 0);
     public static final Shots DUMP = new Shots(-100, 100, 0);
-    public static final double RPM_TOLERANCE = 65;
+    public static final double RPM_TOLERANCE = 85;
     public static final PID PID = new PID(0.00025, 0.000000005, 0, 0.000165);
     public static final PID PID_BACK = new PID(0.00025, 0.00000005, 0, 0.000174);
   }

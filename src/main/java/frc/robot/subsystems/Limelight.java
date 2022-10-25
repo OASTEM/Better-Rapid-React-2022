@@ -38,6 +38,8 @@ public class Limelight extends SubsystemBase {
     this.ty = table.getEntry("ty");
     this.ta = table.getEntry("ta");
     this.tv = table.getEntry("tv");
+    SmartDashboard.putNumber("Debug Velo Lime", 0);
+    SmartDashboard.putNumber("Debug Roller Velo Lime", 0);
   }
 
   @Override
@@ -58,8 +60,9 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putBoolean("Targets", targets);
     SmartDashboard.putNumber("Angle", getLimelightAngle());
     SmartDashboard.putNumber("Distance", getDistance());
-  }
 
+  }
+ 
   public double getDistance(){
     angleToGoalDegrees = limelightMountDegree +  ty.getDouble(0.0);
     angleToGoalInRadians = Math.toRadians(angleToGoalDegrees);
@@ -102,6 +105,12 @@ public class Limelight extends SubsystemBase {
 
   public int debugVelocity(){
     double velo = SmartDashboard.getNumber("Debug Velo Lime", 0);
+    int newVelo = (int) velo;
+    return newVelo;
+  }
+
+    public int debugRollerVelocity(){
+    double velo = SmartDashboard.getNumber("Debug Roller Velo Lime", 0);
     int newVelo = (int) velo;
     return newVelo;
   }

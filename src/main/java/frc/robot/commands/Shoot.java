@@ -43,17 +43,15 @@ public class Shoot extends CommandBase {
     }
 
     // TELEOP DEBUG MODE
-    public Shoot(Intake intake, Shooter shooter, IntSupplier suppliedVelocity, IntSupplier suppliedRollerVelocity,
-            ShuffleBoard shuffleBoard) {
+    public Shoot(Intake intake, Shooter shooter, Limelight limelight, DriveTrain driveTrain, boolean shooterDebug) {
         addRequirements(intake, shooter);
         this.intake = intake;
         this.shooter = shooter;
+        this.limelight = limelight;
+        this.driveTrain = driveTrain;
         this.isAuto = false;
-        this.usingVision = false;
+        this.usingVision = true;
         this.shooterDebug = true;
-        this.suppliedVelocity = suppliedVelocity;
-        this.suppliedRollerVelocity = suppliedRollerVelocity;
-        this.shuffleBoard = shuffleBoard;
     }
 
     // AUTO
@@ -75,9 +73,9 @@ public class Shoot extends CommandBase {
         visionAngle = limelight.getHorizontalAngle();
         
         errorAngle = Math.abs(visionAngle);
-        if (shooterDebug) {
-            shooter.setPIDFront(shuffleBoard.getShooterPID());
-        }
+        // if (shooterDebug) {
+        //     shooter.setPIDFront(shuffleBoard.getShooterPID());
+        // }
         if (usingVision) {
             //shooting = false;
             visionAngle = limelight.getHorizontalAngle();
@@ -105,8 +103,15 @@ public class Shoot extends CommandBase {
             if ((turnCounter > 5 && Math.abs(errorAngle) < 3)) {
                 driveTrain.tankDrive(0, 0);
                 // System.out.println("Done turning!");
+                System.out.println(limelight.debugRollerVelocity());
                 SmartDashboard.putNumber("Distance in Inches", limelight.getDistance());
-                shootWhenReady(-velocity, velocity);
+                if (shooterDebug){
+                    shootWhenReady(-limelight.debugVelocity(), limelight.debugRollerVelocity());
+                }
+                else{
+                    shootWhenReady(-velocity, velocity);
+                }
+
             } else if (Math.abs(errorAngle) < 3) {
                 turnCounter++;
                 visionAngle = limelight.getHorizontalAngle();
@@ -117,8 +122,9 @@ public class Shoot extends CommandBase {
                 shooter.setVelocity(-velocity);
                 }
                 else{
-                    shooter.setRollerVelocity(limelight.debugVelocity());
-                    shooter.setVelocity(limelight.debugVelocity());
+                    System.out.println(limelight.debugRollerVelocity());
+                    shooter.setRollerVelocity(limelight.debugRollerVelocity());
+                    shooter.setVelocity(-limelight.debugVelocity());
                 }
             } else {
                 double turnPower;
@@ -172,10 +178,12 @@ public class Shoot extends CommandBase {
     private void shootWhenReady(double velocity, double backVelocity) {
         // System.out.println("Velocity " + velocity);
         // System.out.println("backVelocity " + backVelocity);
-        double error = Math.abs(velocity - shooter.getLeftVelocity());
-        double errorBack = Math.abs(backVelocity - shooter.getBackLeftVelocity());
-        System.out.println(error + " Not back**************");
-        System.out.println(errorBack + " Back******************");
+        double error;
+        double errorBack;
+        error = Math.abs(velocity - shooter.getLeftVelocity());
+        errorBack = Math.abs(backVelocity - shooter.getBackLeftVelocity());
+        //System.out.println(error + " Not back**************");
+        //System.out.println(errorBack + " Back******************");
         SmartDashboard.putNumber("Front Shooter LEFT RPM IMPORTANTE", shooter.getLeftVelocity());
         SmartDashboard.putNumber("Front Shooter RIGHT RPM IMPORTANTE", shooter.getRightVelocity());
         SmartDashboard.putNumber("Back Shooter RPM IMPORTANTE", shooter.getBackLeftVelocity());
@@ -184,9 +192,9 @@ public class Shoot extends CommandBase {
         // System.out.println("Shooter motors getting ready");
         if (error <= Constants.Shooter.RPM_TOLERANCE && errorBack <= Constants.Shooter.RPM_TOLERANCE) {
             rpmCounter++;
-            // System.out.println("rpm counter++")
+            System.out.println("rpm counter++");
         }
-        else if (isAuto == false) {
+        if (isAuto == false) {
             if (rpmCounter > 15) {
                 if (pulseCounter < 25) {
                     intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
