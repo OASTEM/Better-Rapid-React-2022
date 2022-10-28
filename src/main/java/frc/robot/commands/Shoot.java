@@ -122,6 +122,7 @@ public class Shoot extends CommandBase {
                 shooter.setVelocity(-velocity);
                 }
                 else{
+                    SmartDashboard.putNumber("Distance in Inches", limelight.getDistance());
                     System.out.println(limelight.debugRollerVelocity());
                     shooter.setRollerVelocity(limelight.debugRollerVelocity());
                     shooter.setVelocity(-limelight.debugVelocity());
@@ -194,21 +195,22 @@ public class Shoot extends CommandBase {
             rpmCounter++;
             System.out.println("rpm counter++");
         }
-        if (isAuto == false) {
-            if (rpmCounter > 15) {
-                if (pulseCounter < 25) {
-                    intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
-                    intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
-                    pulseCounter++;
-                    // System.out.println("rpm over 15")
-            }
-        }
-     } else {
-            if (rpmCounter > 10) {
+        if (rpmCounter > 15) {
+            if (pulseCounter < 10) {
                 intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
                 intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
+                pulseCounter++;
+            } else if (rpmCounter < 50) {
+                intake.intakeTopMotor(0);
+                intake.intakeBottomMotor(0);
+                pulseCounter++;
+            } else {
+                intake.intakeTopMotor(0);
+                intake.intakeBottomMotor(0);
+                pulseCounter = 0;
+                rpmCounter = 0;
             }
-    }
+        }
     }
 
     @Override
