@@ -115,7 +115,11 @@ public class Limelight extends SubsystemBase {
    */
   public int getVelocity(){
     double distance = getDistance();
-    int velocity = (int) Math.floor((-0.0322576 * Math.pow(distance, 2) + (26.4813 * distance) + 291.877));
+    int velocity = (int) (0.00239721 * Math.pow(distance, 3) + -1.04519 * Math.pow(distance, 2) + (158.821 * distance) - 4234.88);
+    if (velocity > 5370){
+      velocity = 5370;
+    }
+    SmartDashboard.putNumber("Limelight Velocity", velocity);
     return velocity;
   }
 

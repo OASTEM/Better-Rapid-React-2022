@@ -100,7 +100,7 @@ public class Shoot extends CommandBase {
             int velocity = limelight.getVelocity();
             visionAngle = limelight.getHorizontalAngle();
             errorAngle = Math.abs(visionAngle);
-            if ((turnCounter > 5 && Math.abs(errorAngle) < 3)) {
+            if ((turnCounter > 5 && Math.abs(errorAngle) < 0.8)) {
                 driveTrain.tankDrive(0, 0);
                 // System.out.println("Done turning!");
                 System.out.println(limelight.debugRollerVelocity());
@@ -109,16 +109,16 @@ public class Shoot extends CommandBase {
                     shootWhenReady(-limelight.debugVelocity(), limelight.debugRollerVelocity());
                 }
                 else{
-                    shootWhenReady(-velocity, velocity);
+                    shootWhenReady(-velocity, 70);
                 }
 
-            } else if (Math.abs(errorAngle) < 3) {
+            } else if (Math.abs(errorAngle) < 0.8) {
                 turnCounter++;
                 visionAngle = limelight.getHorizontalAngle();
                 driveTrain.tankDrive(0, 0);
                 System.out.println(velocity);
                 if (!shooterDebug){
-                shooter.setRollerVelocity(velocity);
+                shooter.setRollerVelocity(70);
                 shooter.setVelocity(-velocity);
                 }
                 else{
@@ -146,12 +146,12 @@ public class Shoot extends CommandBase {
             // System.out.println("Placeholder");
             visionAngle = limelight.getHorizontalAngle();
             errorAngle = Math.abs(visionAngle);
-            if ((turnCounter > 5 && Math.abs(errorAngle) < 3)) {
+            if ((turnCounter > 5 && Math.abs(errorAngle) < 1.3)) {
                 driveTrain.tankDrive(0, 0);
                 // System.out.println("Done turning!");
                 SmartDashboard.putNumber("Distance in Inches", limelight.getDistance());
                 shootWhenReady(-shooterVelocity, rollerVelocity);
-            } else if (Math.abs(errorAngle) < 3) {
+            } else if (Math.abs(errorAngle) < 1.5) {
                 turnCounter++;
                 visionAngle = limelight.getHorizontalAngle();
                 driveTrain.tankDrive(0, 0);

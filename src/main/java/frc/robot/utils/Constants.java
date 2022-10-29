@@ -31,7 +31,7 @@ public final class Constants {
 
   public final static class Shooter {
     public static final double PUSH_SPEED = 1;
-    public static final boolean DEBUG_MODE = true;
+    public static final boolean DEBUG_MODE = false;
     public static final Shots FENDER = new Shots(-2650, 1000, -24);
     public static final Shots FENDER_LOW = new Shots(-2000, 500, 0);
     public static final Shots LAUNCHPAD = new Shots(-4000, 4000, 0);
