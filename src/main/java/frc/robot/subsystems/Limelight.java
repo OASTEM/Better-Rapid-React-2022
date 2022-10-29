@@ -42,6 +42,7 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putNumber("Debug Roller Velo Lime", 0);
   }
 
+
   @Override
   public void periodic() {
     this.x = tx.getDouble(0.0);
@@ -63,6 +64,12 @@ public class Limelight extends SubsystemBase {
 
   }
  
+  /**
+   * This function gets the distance.
+   * 
+   * Long paragraph description of it
+   * @return Returns the distance from the ground hub.
+   */
   public double getDistance(){
     angleToGoalDegrees = limelightMountDegree +  ty.getDouble(0.0);
     angleToGoalInRadians = Math.toRadians(angleToGoalDegrees);
@@ -70,33 +77,42 @@ public class Limelight extends SubsystemBase {
     return distance;
   }
 
+  /**
+   * Gets the angle based on the distance from the hub
+   * 
+   * 
+   * @return Returns the angle from the equation
+   */
   public double getLimelightAngle(){
     double length = 119;
     // In inches adjacent
     double angle = (goalHeight - limelightHeight) / length;
-    //System.out.println("Y Value: " + ty.getDouble(0.0));
+    // Gets the ratio of opp and adj
     angle = Math.atan(angle);
+    // Takes this ratio and returns the angle
     angle = Math.abs(angle - Math.toRadians(ty.getDouble(0.0)));
+    // Accounts for any off center
     angle = Math.toDegrees(angle);
+    // Converts it to degrees
     return angle;
   }
   
-  public double getFrontRPM()  {
-    return 2700;
-    //return 215685/y - 4550;
-  }
-
-  public double getBackRPM()  {
-    return -2700;
-    //return -107843/y + 2275;
-  }
-
+  // Gets the x angle coordinate
   public double getHorizontalAngle(){
     return x;
   }
+
+  // Gets the y angle coordinate
   public double getVerticalAngle(){
     return y;
   }
+
+  /**
+   * Gets the velocity off a line of best fit
+   * 
+   * Uses a line of best fit based off some data to calculate the velocity. It uses a cubic line of best fit. 
+   * @return The velocity to set the shooter as. 
+   */
   public int getVelocity(){
     double distance = getDistance();
     int velocity = (int) Math.floor((-0.0322576 * Math.pow(distance, 2) + (26.4813 * distance) + 291.877));

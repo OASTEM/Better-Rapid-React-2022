@@ -197,6 +197,7 @@ public class Shoot extends CommandBase {
         }
         if (rpmCounter > 15) {
             if (pulseCounter < 10) {
+                // Pulses the shooter
                 intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
                 intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
                 pulseCounter++;

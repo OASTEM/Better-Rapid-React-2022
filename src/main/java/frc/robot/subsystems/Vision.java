@@ -58,12 +58,11 @@ public class Vision extends SubsystemBase {
       }
       
     } catch (Exception e) {
-      // TODO roborio handles vision getting unplugged properly :)
-      // isConnected = false;
-      // packetListenerThread.interrupt();
-      // System.out.println("I AM MAKING IS CONNECTED FALSE");
-      // SmartDashboard.putBoolean("Vision Serial Port", isConnected);
-      // camPort.close();
+      isConnected = false;
+      packetListenerThread.interrupt();
+      System.out.println("I AM MAKING IS CONNECTED FALSE");
+      SmartDashboard.putBoolean("Vision Serial Port", isConnected);
+      camPort.close();
     } 
     Timer.delay(0.05);
   }
