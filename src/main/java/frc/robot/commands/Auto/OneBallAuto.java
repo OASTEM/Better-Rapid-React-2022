@@ -18,11 +18,13 @@ public class OneBallAuto extends SequentialCommandGroup {
     addCommands(
         new WaitCommand(2),
         //new Driving(driveTrain, 10, 0.014).withTimeout(2),//,
-        new Shoot(intake, shooter, limelight, driveTrain).withTimeout(4),
-        new IntakeBalls(intake).withTimeout(1),
-        new Shoot(intake, shooter, limelight, driveTrain).withTimeout(4),
-        new Driving(driveTrain, -40, 0.014),
-        new TurnToAngle(driveTrain, navX, 30));
+        new Driving(driveTrain, -70, 0.014),
+        new Shoot(intake, shooter, limelight, driveTrain).withTimeout(5),
+        new IntakeBalls(intake).withTimeout(0.5),
+        new Shoot(intake, shooter, limelight, driveTrain).withTimeout(7)
+        // new Shoot(intake, shooter, limelight, driveTrain).withTimeout(4),
+        // new Driving(driveTrain, -40, 0.014),
+        );
         //new Shoot(intake, shooter, limelight, 2000, 2000, driveTrain, navX).withTimeout(5));
         //new Shoot(intake, shooter, limelight, driveTrain, navX).withTimeout(5));
         // new Driving(driveTrain, 10, 0.014).withTimeout(2));

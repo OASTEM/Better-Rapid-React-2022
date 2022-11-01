@@ -29,7 +29,7 @@ public class Shoot extends CommandBase {
     private int turnCounter;
     private boolean shooterDebug = false;
     private double errorAngle;
-    //private boolean shooting;
+    // private boolean shooting;
 
     // TELEOP VISION
     public Shoot(Intake intake, Shooter shooter, Limelight limelight, DriveTrain driveTrain) {
@@ -55,8 +55,9 @@ public class Shoot extends CommandBase {
     }
 
     // AUTO
-    public Shoot(Intake intake, Shooter shooter, Limelight limelight, int shooterVelocity, int rollerVelocity, DriveTrain driveTrain) {
-        //addRequirements(intake, shooter, limelight, driveTrain);
+    public Shoot(Intake intake, Shooter shooter, Limelight limelight, int shooterVelocity, int rollerVelocity,
+            DriveTrain driveTrain) {
+        // addRequirements(intake, shooter, limelight, driveTrain);
         this.intake = intake;
         this.shooter = shooter;
         this.isAuto = true;
@@ -71,13 +72,13 @@ public class Shoot extends CommandBase {
     @Override
     public void initialize() {
         visionAngle = limelight.getHorizontalAngle();
-        
+
         errorAngle = Math.abs(visionAngle);
         // if (shooterDebug) {
-        //     shooter.setPIDFront(shuffleBoard.getShooterPID());
+        // shooter.setPIDFront(shuffleBoard.getShooterPID());
         // }
         if (usingVision) {
-            //shooting = false;
+            // shooting = false;
             visionAngle = limelight.getHorizontalAngle();
             turnCounter = 0;
 
@@ -105,10 +106,9 @@ public class Shoot extends CommandBase {
                 // System.out.println("Done turning!");
                 System.out.println(limelight.debugRollerVelocity());
                 SmartDashboard.putNumber("Distance in Inches", limelight.getDistance());
-                if (shooterDebug){
+                if (shooterDebug) {
                     shootWhenReady(-limelight.debugVelocity(), limelight.debugRollerVelocity());
-                }
-                else{
+                } else {
                     shootWhenReady(-velocity, 70);
                 }
 
@@ -117,11 +117,10 @@ public class Shoot extends CommandBase {
                 visionAngle = limelight.getHorizontalAngle();
                 driveTrain.tankDrive(0, 0);
                 System.out.println(velocity);
-                if (!shooterDebug){
-                shooter.setRollerVelocity(70);
-                shooter.setVelocity(-velocity);
-                }
-                else{
+                if (!shooterDebug) {
+                    shooter.setRollerVelocity(70);
+                    shooter.setVelocity(-velocity);
+                } else {
                     SmartDashboard.putNumber("Distance in Inches", limelight.getDistance());
                     System.out.println(limelight.debugRollerVelocity());
                     shooter.setRollerVelocity(limelight.debugRollerVelocity());
@@ -183,8 +182,8 @@ public class Shoot extends CommandBase {
         double errorBack;
         error = Math.abs(velocity - shooter.getLeftVelocity());
         errorBack = Math.abs(backVelocity - shooter.getBackLeftVelocity());
-        //System.out.println(error + " Not back**************");
-        //System.out.println(errorBack + " Back******************");
+        // System.out.println(error + " Not back**************");
+        // System.out.println(errorBack + " Back******************");
         SmartDashboard.putNumber("Front Shooter LEFT RPM IMPORTANTE", shooter.getLeftVelocity());
         SmartDashboard.putNumber("Front Shooter RIGHT RPM IMPORTANTE", shooter.getRightVelocity());
         SmartDashboard.putNumber("Back Shooter RPM IMPORTANTE", shooter.getBackLeftVelocity());
@@ -196,7 +195,7 @@ public class Shoot extends CommandBase {
             System.out.println("rpm counter++");
         }
         if (rpmCounter > 15) {
-            if (pulseCounter < 10) {
+            if (pulseCounter < 8) {
                 intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
                 intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
                 pulseCounter++;
