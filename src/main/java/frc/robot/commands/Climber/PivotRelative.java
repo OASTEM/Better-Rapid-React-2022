@@ -21,7 +21,7 @@ public class PivotRelative extends CommandBase {
     target = pivots.getRightPivotEncoder()+(angle*64/360);
     pivots.setPositionPivots(pivots.getRightPivotEncoder()+(angle*64/360), slot);
   }
-
+  
   @Override
   public void execute() {
     

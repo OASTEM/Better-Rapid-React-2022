@@ -195,7 +195,12 @@ public class Shoot extends CommandBase {
             System.out.println("rpm counter++");
         }
         if (rpmCounter > 15) {
+<<<<<<< HEAD
             if (pulseCounter < 8) {
+=======
+            if (pulseCounter < 10) {
+                // Pulses the shooter
+>>>>>>> 6a46e3e95063a0c2768fa637f8d8cc42c928daf2
                 intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
                 intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
                 pulseCounter++;

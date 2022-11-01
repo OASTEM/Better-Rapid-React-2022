@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 //import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-//import frc.robot.commands.Climber.AutoClimb;
+import frc.robot.commands.Climber.AutoClimb;
 import frc.robot.commands.Climber.ClimbDown;
 import frc.robot.commands.Climber.ClimbUp;
 import frc.robot.commands.Climber.PivotRelative;
@@ -85,12 +85,11 @@ public class RobotContainer {
     // driveTrain));
     driveStartButton.whenPressed(new InstantCommand(driveTrain::climbingTrue));
 
-    // driveX.whileHeld(new ConditionalCommand(new AutoClimb(climber, pivots), new
+    driveX.whileHeld(new ConditionalCommand(new AutoClimb(climber, pivots), new InstantCommand(), driveTrain::getClimbing));
+    driveY.whileHeld(new ConditionalCommand(new ClimbUp(climber, Constants.Climber.UP.s), new InstantCommand(), driveTrain::getClimbing));
     // InstantCommand(), driveTrain::getClimbing));
-    driveX.whenPressed(new PivotRelative(pivots, 15, Constants.Pivot.FAST_PID.s));
+    //driveX.whenPressed(new PivotRelative(pivots, 15, Constants.Pivot.FAST_PID.s));
     //driveB.whenPressed(new PivotRelative(pivots, -90, Constants.Pivot.FAST_PID.s));
-    driveY.whileHeld(new ConditionalCommand(new ClimbUp(climber, Constants.Climber.UP.s), new InstantCommand(),
-        driveTrain::getClimbing));
     driveA.whileHeld(new ConditionalCommand(new ClimbDown(climber), new InstantCommand(), driveTrain::getClimbing));
 
     driveB.whenPressed(new InstantCommand(driveTrain::toggleSlowMode));
