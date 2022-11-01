@@ -50,7 +50,7 @@ public class Driving extends CommandBase {
     leftSpeed = kP * leftError * 1.05;
     rightSpeed = kP * rightError;
     driveTrain.tankDrive(leftSpeed, rightSpeed);
-    if (leftError < 10 && rightError < 10){
+    if (Math.abs(leftError) < 10 && Math.abs(rightError) < 10){
       count++;
     }
     else{
