@@ -28,7 +28,7 @@ public class AutoClimb extends SequentialCommandGroup {
         // new WaitCommand(1),
         new PivotRelative(pivots, -25, Constants.Pivot.MODERATE_PID.s).withTimeout(1.5),
         new PivotRelative(pivots, 10, Constants.Pivot.FAST_PID.s).withTimeout(.7),
-        new PivotRelative(pivots, -10, Constants.Pivot.MODERATE_PID.s).withTimeout(1.5),
+        new PivotRelative(pivots, -20, Constants.Pivot.MODERATE_PID.s).withTimeout(1.5),
         // new WaitCommand(1),
         new ClimbDown(climber, 190000, 190000).withTimeout(1),
         new WaitCommand(1),
