@@ -14,6 +14,7 @@ import frc.robot.commands.Calibration;
 import frc.robot.commands.IntakeBalls;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.Auto.OneBallAuto;
+import frc.robot.commands.Auto.TwoBallAuto;
 import frc.robot.subsystems.Climber;
 // import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.DriveTrain;
@@ -93,7 +94,7 @@ public class RobotContainer {
     driveB.whenPressed(new PivotRelative(pivots, -90, Constants.Pivot.FAST_PID.s));
     driveA.whileHeld(new ConditionalCommand(new ClimbDown(climber), new InstantCommand(), driveTrain::getClimbing));
 
-    //driveB.whenPressed(new InstantCommand(driveTrain::toggleSlowMode));
+    driveB.whenPressed(new InstantCommand(driveTrain::toggleSlowMode));
   }
 
   public void configureOPButtonBindings() {
@@ -112,7 +113,8 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // return shuffleBoard.getAutonomousCommand();
-    return new OneBallAuto(intake, shooter, driveTrain, limelight, navX);
+    //return new OneBallAuto(intake, shooter, driveTrain, limelight, navX);
+    return new TwoBallAuto(intake, shooter, driveTrain, navX, 40, limelight);
     // return new Shoot(intake, shooter, limelight, driveTrain, navX);
   }
 

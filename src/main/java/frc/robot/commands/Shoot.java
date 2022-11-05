@@ -29,6 +29,7 @@ public class Shoot extends CommandBase {
     private int turnCounter;
     private boolean shooterDebug = false;
     private double errorAngle;
+    private double totalCount = 0;
     // private boolean shooting;
 
     // TELEOP VISION
@@ -195,11 +196,16 @@ public class Shoot extends CommandBase {
             System.out.println("rpm counter++");
         }
         if (rpmCounter > 15) {
-            if (pulseCounter < SmartDashboard.getNumber("Pulse Counter", 6)) {
+            if (totalCount > 30){
+                intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
+                intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
+            }
+            else if (pulseCounter <  SmartDashboard.getNumber("Pulse Counter", 6)) {
                 // Pulses the shooter
                 intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
                 intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
                 pulseCounter++;
+                totalCount++;
             } else if (rpmCounter < 50) {
                 intake.intakeTopMotor(0);
                 intake.intakeBottomMotor(0);

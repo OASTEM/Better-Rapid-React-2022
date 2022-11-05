@@ -18,8 +18,8 @@ public class TwoBallAuto extends SequentialCommandGroup {
   DriveTrain driveTrain;
   NavX navX;
 
-  public TwoBallAuto(Intake intake, Shooter shooter, DriveTrain driveTrain, NavX navX, double angle,
-      Limelight limelight) {
+  
+  public TwoBallAuto(Intake intake, Shooter shooter, DriveTrain driveTrain, NavX navX, double angle, Limelight limelight) {
     addCommands(
       new Driving(driveTrain, -70, 0.014),
         new Shoot(intake, shooter, limelight, -3000, 1200, driveTrain).withTimeout(6),
