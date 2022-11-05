@@ -200,7 +200,7 @@ public class Shoot extends CommandBase {
                 intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
                 intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
             }
-            else if (pulseCounter <  SmartDashboard.getNumber("Pulse Counter", 6)) {
+            else if (pulseCounter <  SmartDashboard.getNumber("Pulse Counter", 9)) {
                 // Pulses the shooter
                 intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
                 intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);

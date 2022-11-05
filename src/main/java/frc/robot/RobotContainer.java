@@ -71,7 +71,7 @@ public class RobotContainer {
     // primary driver
     driveTrain.setSlowMode(true);
     rightBumper.whileHeld(new IntakeBalls(intake));
-    // rightBumper.whileHeld(new
+    // rightBumper.whileHeld(new)
     // InstantCommand(driveTrain::trueSlowMode)).whenReleased(new
     // InstantCommand(driveTrain::falseSlowMode));
 
@@ -91,7 +91,7 @@ public class RobotContainer {
     // InstantCommand(), driveTrain::getClimbing));
     //leftBumper.whenPressed(new PivotRelative(pivots, 15, Constants.Pivot.FAST_PID.s));
     //driveB.whenPressed(new PivotRelative(pivots, 15, Constants.Pivot.FAST_PID.s));
-    driveB.whenPressed(new PivotRelative(pivots, -90, Constants.Pivot.FAST_PID.s));
+    //driveB.whenPressed(new PivotRelative(pivots, -90, Constants.Pivot.FAST_PID.s));
     driveA.whileHeld(new ConditionalCommand(new ClimbDown(climber), new InstantCommand(), driveTrain::getClimbing));
 
     driveB.whenPressed(new InstantCommand(driveTrain::toggleSlowMode));
@@ -114,7 +114,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // return shuffleBoard.getAutonomousCommand();
     //return new OneBallAuto(intake, shooter, driveTrain, limelight, navX);
-    return new TwoBallAuto(intake, shooter, driveTrain, navX, 40, limelight);
+    return new TwoBallAuto(intake, shooter, driveTrain, navX, 60, limelight);
     // return new Shoot(intake, shooter, limelight, driveTrain, navX);
   }
 
