@@ -91,7 +91,7 @@ public class RobotContainer {
     // InstantCommand(), driveTrain::getClimbing));
     //leftBumper.whenPressed(new PivotRelative(pivots, 15, Constants.Pivot.FAST_PID.s));
     //driveB.whenPressed(new PivotRelative(pivots, 15, Constants.Pivot.FAST_PID.s));
-    //driveB.whenPressed(new PivotRelative(pivots, -90, Constants.Pivot.FAST_PID.s));
+    driveB.whenPressed(new PivotRelative(pivots, -90, Constants.Pivot.FAST_PID.s));
     driveA.whileHeld(new ConditionalCommand(new ClimbDown(climber), new InstantCommand(), driveTrain::getClimbing));
 
     driveB.whenPressed(new InstantCommand(driveTrain::toggleSlowMode));
