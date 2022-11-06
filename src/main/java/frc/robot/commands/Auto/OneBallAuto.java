@@ -16,12 +16,12 @@ public class OneBallAuto extends SequentialCommandGroup {
 
   public OneBallAuto(Intake intake, Shooter shooter, DriveTrain driveTrain, Limelight limelight, NavX navX) {
     addCommands(
-        new WaitCommand(2),
         //new Driving(driveTrain, 10, 0.014).withTimeout(2),//,
-        new Driving(driveTrain, -40, 0.014),
+        new Driving(driveTrain, -60, 0.014),
         new Shoot(intake, shooter, limelight, driveTrain).withTimeout(5),
-        new IntakeBalls(intake).withTimeout(0.5),
-        new Shoot(intake, shooter, limelight, driveTrain).withTimeout(7)
+        //new IntakeBalls(intake).withTimeout(0.5),
+        new Shoot(intake, shooter, limelight, driveTrain).withTimeout(5),
+        new Driving(driveTrain, -20, 0.014)
         // new Shoot(intake, shooter, limelight, driveTrain).withTimeout(4),
         // new Driving(driveTrain, -40, 0.014),
         );

@@ -115,7 +115,7 @@ public class Limelight extends SubsystemBase {
    */
   public int getVelocity(){
     double distance = getDistance();
-    int velocity = (int) (0.00239721 * Math.pow(distance, 3) + -1.04519 * Math.pow(distance, 2) + (158.821 * distance) - 4234.88);
+    int velocity = (int) (0.00239721 * Math.pow(distance, 3) + -1.04519 * Math.pow(distance, 2) + (158.821 * distance) - 4534.88);
     if (velocity > 5370){
       velocity = 5370;
     }
@@ -129,7 +129,7 @@ public class Limelight extends SubsystemBase {
     return newVelo;
   }
 
-    public int debugRollerVelocity(){
+  public int debugRollerVelocity(){
     double velo = SmartDashboard.getNumber("Debug Roller Velo Lime", 0);
     int newVelo = (int) velo;
     return newVelo;

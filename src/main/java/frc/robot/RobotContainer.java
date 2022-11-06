@@ -113,8 +113,8 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // return shuffleBoard.getAutonomousCommand();
-    //return new OneBallAuto(intake, shooter, driveTrain, limelight, navX);
-    return new TwoBallAuto(intake, shooter, driveTrain, navX, 60, limelight);
+    return new OneBallAuto(intake, shooter, driveTrain, limelight, navX);
+    //return new TwoBallAuto(intake, shooter, driveTrain, navX, 20, limelight);
     // return new Shoot(intake, shooter, limelight, driveTrain, navX);
   }
 

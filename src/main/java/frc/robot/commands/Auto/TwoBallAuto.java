@@ -22,13 +22,12 @@ public class TwoBallAuto extends SequentialCommandGroup {
   public TwoBallAuto(Intake intake, Shooter shooter, DriveTrain driveTrain, NavX navX, double angle, Limelight limelight) {
     addCommands(
       new Driving(driveTrain, -40, 0.014),
-        new Shoot(intake, shooter, limelight, -3000, 1200, driveTrain).withTimeout(6),
+      new Shoot(intake, shooter, limelight, driveTrain).withTimeout(6),
         new TurnToAngle(driveTrain, navX, angle).withTimeout(2),
-        new Driving(driveTrain, 40, 0.014).withTimeout(2).alongWith(
-        new IntakeBalls(intake).withTimeout(2)),
+        new Driving(driveTrain, 40, 0.014).withTimeout(2).alongWith(new IntakeBalls(intake).withTimeout(2)),
         new Driving(driveTrain, -40, 0.014),
         new TurnToAngle(driveTrain, navX, -angle).withTimeout(2),
-        new Shoot(intake, shooter, limelight, -3000, 1200, driveTrain).withTimeout(4),
+        new Shoot(intake, shooter, limelight, driveTrain).withTimeout(3),
         new DriveStraight(driveTrain, -50).withTimeout(3));
   }
 } 

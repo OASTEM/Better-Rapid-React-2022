@@ -102,7 +102,7 @@ public class Shoot extends CommandBase {
             int velocity = limelight.getVelocity();
             visionAngle = limelight.getHorizontalAngle();
             errorAngle = Math.abs(visionAngle);
-            if ((turnCounter > 5 && Math.abs(errorAngle) < 0.8)) {
+            if ((turnCounter > 5 && Math.abs(errorAngle) < 2)) {
                 driveTrain.tankDrive(0, 0);
                 // System.out.println("Done turning!");
                 System.out.println(limelight.debugRollerVelocity());
@@ -113,7 +113,7 @@ public class Shoot extends CommandBase {
                     shootWhenReady(-velocity, 70);
                 }
 
-            } else if (Math.abs(errorAngle) < 0.8) {
+            } else if (Math.abs(errorAngle) < 2) {
                 turnCounter++;
                 visionAngle = limelight.getHorizontalAngle();
                 driveTrain.tankDrive(0, 0);
@@ -146,12 +146,12 @@ public class Shoot extends CommandBase {
             // System.out.println("Placeholder");
             visionAngle = limelight.getHorizontalAngle();
             errorAngle = Math.abs(visionAngle);
-            if ((turnCounter > 5 && Math.abs(errorAngle) < 1.3)) {
+            if ((turnCounter > 5 && Math.abs(errorAngle) < 2)) {
                 driveTrain.tankDrive(0, 0);
                 // System.out.println("Done turning!");
                 SmartDashboard.putNumber("Distance in Inches", limelight.getDistance());
                 shootWhenReady(-shooterVelocity, rollerVelocity);
-            } else if (Math.abs(errorAngle) < 1.5) {
+            } else if (Math.abs(errorAngle) < 2) {
                 turnCounter++;
                 visionAngle = limelight.getHorizontalAngle();
                 driveTrain.tankDrive(0, 0);
@@ -188,14 +188,15 @@ public class Shoot extends CommandBase {
         SmartDashboard.putNumber("Front Shooter LEFT RPM IMPORTANTE", shooter.getLeftVelocity());
         SmartDashboard.putNumber("Front Shooter RIGHT RPM IMPORTANTE", shooter.getRightVelocity());
         SmartDashboard.putNumber("Back Shooter RPM IMPORTANTE", shooter.getBackLeftVelocity());
-        SmartDashboard.putNumber("Error", velocity - shooter.getLeftVelocity());
-        SmartDashboard.putNumber("Back Error", backVelocity - shooter.getBackLeftVelocity());
+        SmartDashboard.putNumber("Errorrrrrrrr", error);
+        SmartDashboard.putNumber("Back Errorrrr", errorBack);
         // System.out.println("Shooter motors getting ready");
         if (error <= Constants.Shooter.RPM_TOLERANCE && errorBack <= Constants.Shooter.RPM_TOLERANCE) {
             rpmCounter++;
-            System.out.println("rpm counter++");
+            SmartDashboard.putNumber("Number of RPM Counters", rpmCounter);
+            System.out.println("rpm counter+++++++");
         }
-        if (rpmCounter > 15) {
+        if (rpmCounter > 8) {
             if (totalCount > 30){
                 intake.intakeTopMotor(Constants.Shooter.PUSH_SPEED * -1);
                 intake.intakeBottomMotor(Constants.Shooter.PUSH_SPEED);
