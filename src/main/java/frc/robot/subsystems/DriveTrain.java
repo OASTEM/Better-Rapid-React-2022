@@ -92,7 +92,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void climbingTrue(){
-    climbing = true;
+    climbing = !climbing;
   }
 
   public boolean getClimbing(){
